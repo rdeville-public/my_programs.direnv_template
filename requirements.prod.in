@@ -1,0 +1,22 @@
+# PRODUCTION REQUIREMENTS
+# ============================================================
+# DESCRIPTION:
+#   Packages required to be able to rune the project in production
+
+# Basic tools
+# ------------------------------------------------------------
+# pip-tools keeps your pinned dependencies fresh.
+# https://pypi.org/project/pip-tools/
+pip-tools
+# A built-package format for Python
+# https://pypi.org/project/wheel/
+wheel
+
+# Project related requirements
+# ------------------------------------------------------------
+# Python Git Library
+# https://pypi.org/project/gitpython/
+gitpython
+# YAML parser and emitter for Python
+# https://pypi.org/project/pyyaml/
+pyyaml
