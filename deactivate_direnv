@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+
+# SHELLCHECK
+# ---------------------------------------------------------------------------
+# Globally disable some shellcheck errors, warnings or remarks.
+# shellcheck disable=SC1090,SC2155,SC2039,SC2001
+#   - SC1090: Can't follow non-constant source. Use a directive to specify location.
+#   - SC2155: Declare and assign separately to avoid masking return values.
+#   - SC2039:In POSIX sh, array references are undefined
+#   - SC2001: See if you can use ${variable//search/replace} instead
+
+
+deactivate_direnv()
+{
+  deactivate_modules()
+  {
+    if [[ -f "${DIRENV_ROOT}/.direnv/.loaded_modules" ]]
+    then
+      while read -r i_module
+      do
+        . "${DIRENV_MODULE_FOLDER}/${i_module}.sh"
+        direnv_log "INFO" "Deactivating module ${i_module}"
+        if command -v "deactivate_${i_module}" &> /dev/null
+        then
+          deactivate_"${i_module}"
+        fi
+      done <<< "$(cat "${DIRENV_ROOT}/.direnv/.loaded_modules")"
+    fi
+  }
+
+
+  get_methods_list()
+  {
+    local file_list=$1
+    grep -E "^[a-zA-Z0-9_]*\(\)" "${file_list}" | cut -d ":" -f 2
+  }
+
+
+  unset_methods()
+  {
+    local methods_list=$1
+    local i_method
+
+    while read -r i_method
+    do
+      i_method=${i_method//\(\)/}
+      if command -v "${i_method}" > /dev/null 2>&1
+      then
+        unset -f "${i_method}"
+      fi
+    done <<<"${methods_list}"
+  }
+
+  unset_modules()
+  {
+    local i_module
+    local file_list
+
+    if [[ -f "${DIRENV_ROOT}/.direnv/.loaded_modules" ]]
+    then
+      while read -r i_module
+      do
+        if echo "${i_module}" | grep -q ":"
+        then
+          i_module=$(echo "${i_module}" | cut -d ":" -f 1)
+        fi
+        file_list="${DIRENV_MODULE_FOLDER}/${i_module}.sh"
+        unset_methods "$(get_methods_list "${file_list}")"
+        # Deallocate module associative array
+        unset "${i_module}"
+      done <<< "$(cat "${DIRENV_ROOT}/.direnv/.loaded_modules")"
+    fi
+  }
+
+  unset_methods_variables()
+  {
+    local i_module
+    local i_file_list
+
+    unset_modules
+    for i_file_list in "${DIRENV_LIB_FOLDER}"/*.sh \
+                       "${DIRENV_ROOT}/.direnv/activate_direnv"
+    do
+      unset_methods "$(get_methods_list "${i_file_list}")"
+    done
+
+  }
+
+  for i_lib in "${DIRENV_LIB_FOLDER}"/*.sh
+  do
+    . "${i_lib}"
+  done
+  deactivate_modules
+  unset_methods_variables
+  if [[ -f "${DIRENV_ROOT}/.direnv/.loaded_modules" ]]
+  then
+    rm -f "${DIRENV_ROOT}/.direnv/.loaded_modules"
+  fi
+
+  unset DIRENV_ROOT
+  unset DIRENV_LOG_FOLDER
+  unset DIRENV_LIB_FOLDER
+  unset DIRENV_SRC_FOLDER
+  unset DIRENV_BIN_FOLDER
+  unset DIRENV_SHA1_FOLDER
+  unset DIRENV_TEMP_FOLDER
+  unset DIRENV_MODULE_FOLDER
+  unset DIRENV_CONFIG_PATH
+  unset DIRENV_INI_SEP
+
+  unset -f deactivate_direnv
+}
+
