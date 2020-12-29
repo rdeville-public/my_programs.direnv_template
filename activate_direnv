@@ -1,182 +1,218 @@
 #!/usr/bin/env bash
-
-# SHELLCHECK
-# ---------------------------------------------------------------------------
-# Globally disable some shellcheck errors, warnings or remarks.
-# shellcheck disable=SC1090,SC2155,SC2039,SC2001
-#   - SC1090: Can't follow non-constant source. Use a directive to specify location.
-#   - SC2155: Declare and assign separately to avoid masking return values.
-#   - SC2039: In POSIX sh, array references are undefined
-#   - SC2001: See if you can use ${variable//search/replace} instead
-
-deactivate_modules()
-{
-  if [[ -f "${DIRENV_ROOT}/.direnv/.loaded_modules" ]]
-  then
-    while read -r i_module
-    do
-      . "${DIRENV_MODULE_FOLDER}/${i_module}.sh"
-      direnv_log "INFO" "Deactivating module ${i_module}"
-      if command -v "deactivate_${i_module}" &> /dev/null
-      then
-        deactivate_"${i_module}"
-      fi
-    done <<< "$(cat "${DIRENV_ROOT}/.direnv/.loaded_modules")"
-    rm "${DIRENV_ROOT}/.direnv/.loaded_modules"
-  fi
-}
-
-get_methods_list()
-{
-  local file_list=$1
-  grep -E "^[a-zA-Z0-9_]*\(\)" "${file_list}" | cut -d ":" -f 2
-}
-
-unset_methods()
-{
-  local methods_list=$1
-  local i_method
-
-  while read -r i_method
-  do
-    i_method=${i_method//\(\)/}
-    if command -v "${i_method}" > /dev/null 2>&1
-    then
-      unset -f "${i_method}"
-    fi
-  done <<<"${methods_list}"
-}
-
-unset_modules()
-{
-  local i_module
-  local file_list
-
-
-  if [[ -f "${DIRENV_ROOT}/.direnv/.loaded_modules" ]]
-  then
-    while read -r i_module
-    do
-      if echo "${i_module}" | grep -q ":"
-      then
-        i_module=$(echo "${i_module}" | cut -d ":" -f 1)
-      fi
-      file_list="${DIRENV_MODULE_FOLDER}/${i_module}.sh"
-      unset_methods "$(get_methods_list "${file_list}")"
-      # Deallocate module associative array
-      unset "${i_module}"
-    done <<< "$(cat "${DIRENV_ROOT}/.direnv/.loaded_modules")"
-  fi
-}
-
-unset_methods_variables()
-{
-  local i_module
-  local i_file_list
-
-  unset_modules
-  for i_file_list in "${DIRENV_LIB_FOLDER}"/*.sh \
-                     "${DIRENV_ROOT}/.direnv/activate_direnv"
-  do
-    unset_methods "$(get_methods_list "${i_file_list}")"
-  done
-
-}
-
-install_upgrade_script()
-{
-  if ! [ -f "${DIRENV_BIN_FOLDER}/upgrade_direnv" ]
-  then
-    direnv_log "INFO" "Installing direnv upgrade script"
-    ln -s "${DIRENV_SRC_FOLDER}/upgrade_direnv.sh" "${DIRENV_BIN_FOLDER}/upgrade_direnv"
-  fi
-
-}
-
-
-check_sha1()
-{
-  local e_normal="\e[0m"     # normal (white fg & transparent bg)
-  local e_error="\e[0;31m"   # red fg
-  local file="$1"
-  local sha1_file="$2"
-
-  if echo "${file}" | grep -q ".envrc"
-  then
-    sha1_file="${DIRENV_ROOT}/.direnv/.sha1/$(basename "${file}").sha1"
-  else
-    sha1_file="$(echo "${file}" | sed "s|${DIRENV_ROOT}/.direnv|${DIRENV_SHA1_FOLDER}|g").sha1"
-  fi
-
-  if [ "$(sha1sum "${file}" | cut -d " " -f 1 )" != "$(cat "${sha1_file}")" ]
-  then
-    file=$( echo "${file}" | sed "s|${DIRENV_ROOT}/||g")
-    sha1_file=$( echo "${sha1_file}" | sed "s|${DIRENV_ROOT}/||g")
-    echo -e "${e_error}[ERROR] SHA1 of file \`${file}\` does not correspond to \`${sha1_file}\`.${e_normal}"
-    return 1
-  fi
-  return 0
-}
-
-check_if_direnv()
-{
-  local script_path="$( cd "$(dirname "$0")" || return 1 >/dev/null 2>&1 ; pwd -P )"
-  # If absolute script path is `/usr/bin`, this means this script has been
-  # called from `direnv` binary
-  if ! [[ "${script_path}" == "/usr/bin" ]]
-  then
-    check_sha1 "${DIRENV_ROOT}/.direnv/deactivate_direnv" || error="true"
-    . "${DIRENV_ROOT}/.direnv/deactivate_direnv"
-  fi
-}
-
-set_direnv()
-{
-  local config_file_name=".envrc.ini"
-  local script_path="$( cd "$(dirname "$0")" || return 1 >/dev/null 2>&1 ; pwd -P )"
-  local error="false"
-  # If absolute script path is `/usr/bin`, this means this script has been called
-  # from `direnv` binary
-  if [[ "${script_path}" == "/usr/bin" ]]
-  then
-    # REMARK: PWD is not the actual path of the user but the path of to the .envrc
-    # file loaded by direnv
-    export DIRENV_ROOT="$PWD"
-    export IS_DIRENV="true"
-    check_sha1 "${DIRENV_ROOT}/.envrc" || error="true"
-  else
-    export DIRENV_ROOT="${script_path%%\/.direnv*}"
-    export IS_DIRENV="false"
-  fi
-  export DIRENV_LOG_FOLDER="${DIRENV_ROOT}/.direnv/log"
-  export DIRENV_LIB_FOLDER="${DIRENV_ROOT}/.direnv/lib"
-  export DIRENV_SRC_FOLDER="${DIRENV_ROOT}/.direnv/src"
-  export DIRENV_BIN_FOLDER="${DIRENV_ROOT}/.direnv/bin"
-  export DIRENV_SHA1_FOLDER="${DIRENV_ROOT}/.direnv/.sha1"
-  export DIRENV_TEMP_FOLDER="${DIRENV_ROOT}/.direnv/tmp"
-  export DIRENV_MODULE_FOLDER="${DIRENV_ROOT}/.direnv/modules"
-  export DIRENV_CONFIG_PATH="${DIRENV_ROOT}/${config_file_name}"
-  export DIRENV_INI_SEP="%%%%"
-  mkdir -p "${DIRENV_LOG_FOLDER}"
-  mkdir -p "${DIRENV_SHA1_FOLDER}"
-  mkdir -p "${DIRENV_TEMP_FOLDER}"
-
-  if [ -f "${DIRENV_ROOT}/.direnv/.loaded_modules" ]
-  then
-    rm "${DIRENV_ROOT}/.direnv/.loaded_modules"
-  fi
-
-  check_sha1 "${DIRENV_ROOT}/.direnv/activate_direnv" || error="true"
-
-  if [ "${error}" = "true" ]
-  then
-    return 1
-  fi
-}
-
+# """Activate the directory environment
+#
+# SYNOPSIS:
+#   source /path/to/activate_direnv
+#
+# DESCRIPTION:
+#   This script can be :
+#
+#     - Sourced manually, like for python virtual environment, with the
+#       following command:
+#       ```
+#       source /path/to/.direnv/activate_direnv
+#       ```
+#     - Sourced automatically by `direnv` using file `.envrc`, see thee
+#       description in the header of file `.envrc`.
+#
+# """
 
 activate_direnv()
 {
+  deactivate_modules()
+  {
+    if [[ -f "${DIRENV_ROOT}/.direnv/.loaded_modules" ]]
+    then
+      while read -r i_module
+      do
+        # shellcheck disable=SC1090
+        #   - SC1090: Can't follow non-constant source. Use a directive to specify location.
+        . "${DIRENV_MODULE_FOLDER}/${i_module}.sh"
+        direnv_log "INFO" "Deactivating module ${i_module}"
+        if command -v "deactivate_${i_module}" &> /dev/null
+        then
+          deactivate_"${i_module}"
+        fi
+      done <<< "$(cat "${DIRENV_ROOT}/.direnv/.loaded_modules")"
+      rm "${DIRENV_ROOT}/.direnv/.loaded_modules"
+    fi
+  }
+
+  get_methods_list()
+  {
+    local file_list=$1
+    grep -E "^[a-zA-Z0-9_]*\(\)" "${file_list}" | cut -d ":" -f 2
+  }
+
+  unset_methods()
+  {
+    local methods_list=$1
+    local i_method
+
+    while read -r i_method
+    do
+      i_method=${i_method//\(\)/}
+      if command -v "${i_method}" > /dev/null 2>&1
+      then
+        unset -f "${i_method}"
+      fi
+    done <<<"${methods_list}"
+  }
+
+  unset_modules()
+  {
+    local i_module
+    local file_list
+
+
+    if [ -f "${DIRENV_ROOT}/.direnv/.loaded_modules" ]
+    then
+      while read -r i_module
+      do
+        if echo "${i_module}" | grep -q ":"
+        then
+          i_module=$(echo "${i_module}" | cut -d ":" -f 1)
+        fi
+        file_list="${DIRENV_MODULE_FOLDER}/${i_module}.sh"
+        unset_methods "$(get_methods_list "${file_list}")"
+        # Deallocate module associative array
+        unset "${i_module}"
+      done <<< "$(cat "${DIRENV_ROOT}/.direnv/.loaded_modules")"
+    fi
+  }
+
+  unset_methods_variables()
+  {
+    local i_module
+    local i_file_list
+
+    unset_modules
+    for i_file_list in "${DIRENV_LIB_FOLDER}"/*.sh \
+                       "${DIRENV_ROOT}/.direnv/activate_direnv"
+    do
+      unset_methods "$(get_methods_list "${i_file_list}")"
+    done
+
+  }
+
+  install_upgrade_script()
+  {
+    if ! [ -f "${DIRENV_BIN_FOLDER}/upgrade_direnv" ]
+    then
+      direnv_log "INFO" "Installing direnv upgrade script"
+      ln -s "${DIRENV_SRC_FOLDER}/upgrade_direnv.sh" "${DIRENV_BIN_FOLDER}/upgrade_direnv"
+    fi
+
+  }
+
+
+  check_sha1()
+  {
+    local e_normal="\e[0m"     # normal (white fg & transparent bg)
+    local e_error="\e[0;31m"   # red fg
+    local file="$1"
+    local sha1_file="$2"
+
+    if echo "${file}" | grep -q ".envrc"
+    then
+      sha1_file="${DIRENV_ROOT}/.direnv/.sha1/$(basename "${file}").sha1"
+    else
+      # Replace every occurrences of `${DIRENV_ROOT/.direnv` with
+      # `${DIRENV_SHA1_FOLDER}` in variable `${file}`
+      sha1_file="${file//${DIRENV_ROOT}\/.direnv/${DIRENV_SHA1_FOLDER}}.sha1"
+    fi
+
+    if [ "$(sha1sum "${file}" | cut -d " " -f 1 )" != "$(cat "${sha1_file}")" ]
+    then
+      file=$( echo "${file}" | sed "s|${DIRENV_ROOT}/||g")
+      sha1_file=$( echo "${sha1_file}" | sed "s|${DIRENV_ROOT}/||g")
+      echo -e "${e_error}[ERROR] SHA1 of file \`${file}\` does not correspond to \`${sha1_file}\`.${e_normal}"
+      return 1
+    fi
+    return 0
+  }
+
+  check_if_direnv()
+  {
+    local script_path="$( cd "$(dirname "$0")" || return 1 >/dev/null 2>&1 ; pwd -P )"
+    # If absolute script path is `/usr/bin`, this means this script has been
+    # called from `direnv` binary
+    if ! [ "${script_path}" == "/usr/bin" ]
+    then
+      check_sha1 "${DIRENV_ROOT}/.direnv/deactivate_direnv" || error="true"
+      . "${DIRENV_ROOT}/.direnv/deactivate_direnv"
+    fi
+  }
+
+  set_direnv()
+  {
+    local config_file_name=".envrc.ini"
+    local script_path="$( cd "$(dirname "$0")" || return 1 >/dev/null 2>&1 ; pwd -P )"
+    local error="false"
+    # If absolute script path is `/usr/bin`, this means this script has been called
+    # from `direnv` binary
+    if [ "${script_path}" == "/usr/bin" ]
+    then
+      # REMARK: PWD is not the actual path of the user but the path of to the .envrc
+      # file loaded by direnv
+      export DIRENV_ROOT="$PWD"
+      export IS_DIRENV="true"
+      check_sha1 "${DIRENV_ROOT}/.envrc" || error="true"
+    else
+      export DIRENV_ROOT="${script_path%%\/.direnv*}"
+      export IS_DIRENV="false"
+    fi
+    export DIRENV_LOG_FOLDER="${DIRENV_ROOT}/.direnv/log"
+    export DIRENV_LIB_FOLDER="${DIRENV_ROOT}/.direnv/lib"
+    export DIRENV_SRC_FOLDER="${DIRENV_ROOT}/.direnv/src"
+    export DIRENV_BIN_FOLDER="${DIRENV_ROOT}/.direnv/bin"
+    export DIRENV_SHA1_FOLDER="${DIRENV_ROOT}/.direnv/.sha1"
+    export DIRENV_TEMP_FOLDER="${DIRENV_ROOT}/.direnv/tmp"
+    export DIRENV_MODULE_FOLDER="${DIRENV_ROOT}/.direnv/modules"
+    export DIRENV_CONFIG_PATH="${DIRENV_ROOT}/${config_file_name}"
+    export DIRENV_INI_SEP="%%%%"
+    mkdir -p "${DIRENV_LOG_FOLDER}"
+    mkdir -p "${DIRENV_SHA1_FOLDER}"
+    mkdir -p "${DIRENV_TEMP_FOLDER}"
+
+    if [ -f "${DIRENV_ROOT}/.direnv/.loaded_modules" ]
+    then
+      rm "${DIRENV_ROOT}/.direnv/.loaded_modules"
+    fi
+
+    check_sha1 "${DIRENV_ROOT}/.direnv/activate_direnv" || error="true"
+
+    if [ "${error}" = "true" ]
+    then
+      return 1
+    fi
+  }
+
+  safe_exit()
+  {
+    # safely exit the script by calling deactivate_direnv if something wrong
+    # happen during the execution of the script.
+    # mainly use to avoid repeating the same bash command lines in this script.
+    # no param
+    local e_normal="\e[0m"     # normal (white fg & transparent bg)
+    local e_error="\e[0;31m"   # red fg
+    echo -e "${e_error}[ERROR] An error occurs while loading direnv.${e_normal}"
+    deactivate_modules
+    unset_methods_variables
+
+    unset DIRENV_LOG_FOLDER
+    unset DIRENV_LIB_FOLDER
+    unset DIRENV_SRC_FOLDER
+    unset DIRENV_BIN_FOLDER
+    unset DIRENV_SHA1_FOLDER
+    unset DIRENV_TEMP_FOLDER
+    unset DIRENV_MODULE_FOLDER
+    unset DIRENV_CONFIG_PATH
+    unset DIRENV_INI_SEP
+    unset IS_DIRENV
+    return 1
+  }
+
   local i_module
   local i_lib
   local sha1_file
@@ -198,7 +234,7 @@ activate_direnv()
     if ! echo "${i_module}" | grep -q ":"
     then
       i_module=$(echo "${i_module}" | cut -d ":" -f 1)
-      if ! [[ -e "${DIRENV_MODULE_FOLDER}/${i_module}.sh" ]]
+      if ! [ -e "${DIRENV_MODULE_FOLDER}/${i_module}.sh" ]
       then
         direnv_log "ERROR" "Module ${i_module} does not exists !"
         direnv_log "ERROR" "Please review file ${DIRENV_CONFIG_PATH} to remove or comment it."
@@ -208,7 +244,7 @@ activate_direnv()
       . "${DIRENV_MODULE_FOLDER}/${i_module}.sh"
       direnv_log "INFO" "Loading module ${i_module}"
       ${i_module} || error="true"
-      if ! [[ -f "${DIRENV_ROOT}/.direnv/.loaded_modules" ]] \
+      if ! [ -f "${DIRENV_ROOT}/.direnv/.loaded_modules" ] \
           || ! grep -q "${i_module}" "${DIRENV_ROOT}/.direnv/.loaded_modules"
       then
         echo "${i_module}" >> "${DIRENV_ROOT}/.direnv/.loaded_modules"
@@ -225,29 +261,4 @@ activate_direnv()
   unset_methods_variables
 }
 
-safe_exit()
-{
-  # safely exit the script by calling deactivate_direnv if something wrong
-  # happen during the execution of the script.
-  # mainly use to avoid repeating the same bash command lines in this script.
-  # no param
-  local e_normal="\e[0m"     # normal (white fg & transparent bg)
-  local e_error="\e[0;31m"   # red fg
-  echo -e "${e_error}[ERROR] An error occurs while loading direnv.${e_normal}"
-  deactivate_modules
-  unset_methods_variables
-
-  unset DIRENV_LOG_FOLDER
-  unset DIRENV_LIB_FOLDER
-  unset DIRENV_SRC_FOLDER
-  unset DIRENV_BIN_FOLDER
-  unset DIRENV_SHA1_FOLDER
-  unset DIRENV_TEMP_FOLDER
-  unset DIRENV_MODULE_FOLDER
-  unset DIRENV_CONFIG_PATH
-  unset DIRENV_INI_SEP
-  unset IS_DIRENV
-  return 1
-}
-
-activate_direnv || safe_exit
+activate_direnv

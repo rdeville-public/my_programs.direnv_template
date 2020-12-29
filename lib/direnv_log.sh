@@ -39,15 +39,10 @@ direnv_log()
 
   if [[ "${msg_severity}" =~ ^(error|time|warning|info|debug)$ ]]
   then
+    # Move $@ to start at the second arguments
     shift
-    case ${SHELL} in
-      (*bash)
-        prefix="${!msg_severity}"
-        ;;
-      (*zsh)
-        prefix="${(P)msg_severity}"
-        ;;
-    esac
+    # Place the content of variable which name is defined by ${msg_severity}
+    prefix="${!msg_severity}"
   else
     prefix="${info}"
   fi
