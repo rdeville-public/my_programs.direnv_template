@@ -8,6 +8,7 @@ ansible.cfg
 python_venv
 .envrc.ini
 bin
+.sha1/.envrc.ini.sha1
 
 # Templated gitignore from https://gitignore.io
 # ==============================================================================
