@@ -457,6 +457,58 @@ ${e_error} does not correspond to ${e_bold}\`${sha1_file}\`.${e_normal}"
     fi
   }
 
+  load_config_file()
+  {
+    # """Load the configuration file
+    #
+    # Ensure the configuration file `.envrc.ini` exists. If not print and error
+    # and exit. Else ensure that `.envrc.ini has not been modified, if
+    # `.envrc.ini` has been modified, print an error and exit.
+    # If everything is right, parse the configuration file `.envrc.ini`
+    #
+    # Globals:
+    #   DIRENV_SHA1_FOLDER
+    #
+    # Arguments:
+    #   $1 string, path to the configuration file
+    #
+    # Output:
+    #   Error message if something went wrong
+    #
+    # Returns:
+    #   0 if the configuration file has been loaded.
+    #   1 if there is an error with the configuration file.
+    #
+    # """
+
+
+    local config_file_path="$1"
+    local config_file_sha1
+
+    config_file_sha1="${DIRENV_SHA1_FOLDER}/$(basename "${config_file_path}").sha1"
+
+    if ! [[ -f "${config_file_path}" ]]
+    then
+      direnv_log "ERROR" "File ${config_file_path} does not exists."
+      return 1
+    else
+      if ! [ -f "${config_file_sha1}" ]
+      then
+        sha1sum "${config_file_path}" | cut -d " " -f 1 > "${config_file_sha1}"
+      else
+        if ! check_sha1 "${config_file_path}"
+        then
+          direnv_log "ERROR" "If you modify ${config_file_path}"
+          direnv_log "ERROR" "Please remove ${config_file_sha1}"
+          direnv_log "ERROR" "And reactivate direnv."
+          return 1
+        fi
+      fi
+      parse_ini_file "${config_file_path}" || return 1
+    fi
+  }
+
+
   deactivate_modules()
   {
     # """Deactivate already module
@@ -553,7 +605,7 @@ ${e_error} does not correspond to ${e_bold}\`${sha1_file}\`.${e_normal}"
   done
 
   # Parse configuration file
-  load_config_file || return 1
+  load_config_file ${DIRENV_CONFIG_PATH} || return 1
 
   # Load every module listed in configuration file
   for i_module in "${direnv_modules[@]}"
