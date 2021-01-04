@@ -1,59 +1,96 @@
 #!/usr/bin/env bash
+# """Print debug message in colors depending on message severity
+#
+# DESCRIPTION:
+#   THIS SCRIPT SHOULD BE USED AS LIBRARY SCRIPT
+#
+#   Best use is to source this file to define `direnv_log` method. Print log
+#   depending on message severity, such as:
+#
+#     - DEBUG severity print in the fifth colors of the terminal (usually magenta)
+#     - INFO severity print in the second colors of the terminal (usually green)
+#     - WARNING severity print in the third colors of the terminal (usually yellow)
+#     - ERROR severity print in the third colors of the terminal (usually red)
+#
+# """
 
-# SHELLCHECK
-# ---------------------------------------------------------------------------
-# Globally disable some shellcheck errors, warnings or remarks.
-# shellcheck disable=SC1090,SC2155,SC2034,SC2039,SC2001
-#   - SC1090: Can't follow non-constant source. Use a directive to specify location.
-#   - SC2155: Declare and assign separately to avoid masking return values.
-#   - SC2039:In POSIX sh, array references are undefined
-#   - SC2001: See if you can use ${variable//search/replace} instead
-
+# shellcheck disable=SC2034
+#   - SC2034: var appears unused, Verify use (or export if used externally)
 direnv_log()
 {
-  # Print colored log depending on provided parameter
-  # PARAM:
-  #   * $1: String, log level (DEBUG, INFO, WARN, ERROR) or message to print
-  #     $2: String, message to print if log level is specified
+  # """Print debug message in colors depending on message severity
+  #
+  # Echo colored log depending on user provided message severity. Message
+  # severity are associated to following color output:
+  #
+  #   - DEBUG severity print in the fifth colors of the terminal (usually magenta)
+  #   - INFO severity print in the second colors of the terminal (usually green)
+  #   - WARNING severity print in the third colors of the terminal (usually yellow)
+  #   - ERROR severity print in the third colors of the terminal (usually red)
+  #
+  # If no message severity is provided, severity will automatically be set to
+  # INFO.
+  #
+  # Globals:
+  #   ZSH_VERSION
+  #
+  # Arguments:
+  #   $1 string, message severity or message content
+  #   $@ string, message content
+  #
+  # Output:
+  #   Log informations colored
+  #
+  # Returns:
+  #   None
+  #
+  # """
 
-  # COLORING ECHO OUTPUT
-  # ---------------------------------------------------------------------------
-  # Some exported variable I sometimes use in my script to echo informations in
-  # colors. Base on only 8 colors to ensure portability of color when in tty
-  local e_normal="\e[0m"     # normal (white fg & transparent bg)
-  local e_bold="\e[1m"       # bold
-  local e_dim="\e[2m"        # dim
-  local e_italic="\e[3m"     # italic
-  local e_underline="\e[4m"  # underline
-  local e_debug="\e[0;35m"   # magenta fg
-  local e_info="\e[0;32m"    # green fg
-  local e_warning="\e[0;33m" # yellow fg
-  local e_error="\e[0;31m"   # red fg
-  # store preformated colored prefix for log message
+  # Store color prefixes in variable to ease their use.
+  # Base on only 8 colors to ensure portability of color when in tty
+  local e_normal="\e[0m"     # Normal (usually white fg & transparent bg)
+  local e_bold="\e[1m"       # Bold
+  local e_debug="\e[0;35m"   # Fifth term color (usually magenta fg)
+  local e_info="\e[0;32m"    # Second term color (usually green fg)
+  local e_warning="\e[0;33m" # Third term color (usually yellow fg)
+  local e_error="\e[0;31m"   # First term color (usually red fg)
+
+  # Store preformated colored prefix for log message
   local error="${e_bold}${e_error}[ERROR]${e_normal}${e_error}"
   local warning="${e_bold}${e_warning}[WARNING]${e_normal}${e_warning}"
   local info="${e_bold}${e_info}[INFO]${e_normal}${e_info}"
   local debug="${e_bold}${e_debug}[DEBUG]${e_normal}${e_debug}"
-  local msg_severity=$(echo "$1" | tr '[:upper:]' '[:lower:]')
+
+  local msg_severity
   local msg
+
+  # Not using ${1^^} to ensure portability when using ZSH
+  msg_severity=$(echo "$1" | tr '[:upper:]' '[:lower:]')
 
   if [[ "${msg_severity}" =~ ^(error|time|warning|info|debug)$ ]]
   then
-    # Move $@ to start at the second arguments
+    # Shift arguments by one such that $@ start from the second arguments
     shift
     # Place the content of variable which name is defined by ${msg_severity}
-    prefix="${!msg_severity}"
+    # For instance, if `msg_severity` is INFO, then `prefix` will have the same
+    # value as variable `info`.
+    if [[ -n "${ZSH_VERSION}" ]]
+    then
+      prefix="${(P)msg_severity}"
+    else
+      prefix="${!msg_severity}"
+    fi
   else
     prefix="${info}"
   fi
-  # Fill content of prefix with the content of the variable which name is the
-  # message severity (depending on the shell type)
+
+  # Concat all remaining arguments in the message content.
   msg="${prefix} $* ${e_normal}"
 
-  if [ "${msg_severity}" = "error" ]
+  if [[ "${msg_severity}" = "error" ]]
   then
     echo -e "${msg}"
-  elif [ -n "${DIRENV_DEBUG_LEVEL}" ]
+  elif [[ -n "${DIRENV_DEBUG_LEVEL}" ]]
   then
     case ${DIRENV_DEBUG_LEVEL} in
       DEBUG)
@@ -67,7 +104,9 @@ direnv_log()
         ;;
     esac
   fi
-
-
 }
 
+# ------------------------------------------------------------------------------
+# VIM MODELINE
+# vim: ft=bash: foldmethod=indent
+# ------------------------------------------------------------------------------
