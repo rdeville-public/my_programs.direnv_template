@@ -22,7 +22,7 @@ parse_ini_file()
   #
   # For instances:
   #
-  # ```dosini
+  # ```ini
   # [section_name]
   # # Comment
   # key_1 = foo
@@ -43,7 +43,7 @@ parse_ini_file()
   #   DIRENV_INI_SEP
   #
   # Arguments:
-  #   $0 string, path to the `.ini` config file to parse
+  #   $0: string, path to the `.ini` config file to parse
   #
   # Output:
   #   None
@@ -64,7 +64,7 @@ parse_ini_file()
     #
     # For instances:
     #
-    # ```dosini
+    # ```ini
     # [section name]
     # # Comment
     # key_1 = foo
@@ -85,7 +85,7 @@ parse_ini_file()
     #   DIRENV_INI_SEP
     #
     # Arguments:
-    #   $0 string, path to the `.ini` config file to parse
+    #   $0: string, path to the `.ini` config file to parse
     #
     # Output:
     #   None
@@ -109,7 +109,7 @@ parse_ini_file()
     # Parse a single line provided as first argument from an `.ini`, i.e. of the
     # following form:
     #
-    # ```dosini
+    # ```ini
     # # This is a comment
     # key=value
     # key =value
@@ -132,8 +132,8 @@ parse_ini_file()
     #   DIRENV_INI_SEP
     #
     # Arguments:
-    #   $1 string, line to part
-    #   $2 string, name of the module where key, value will be stored
+    #   $1: string, line to part
+    #   $2: string, name of the module where key, value will be stored
     #
     # Output:
     #   None
@@ -162,6 +162,10 @@ parse_ini_file()
       # Remove first string `cmd:` from the value
       cmd=${value/cmd:/}
       value=$( eval "${cmd}" )
+    elif [[ "${value}" =~ \$\{.*\} ]]
+    then
+      # Escape in value variable
+      value=${value//\$/\\\$}
     fi
 
     if [[ "${last_module_name}" =~ : ]]
@@ -201,8 +205,8 @@ parse_ini_file()
     #   None
     #
     # Arguments:
-    #   $1 string, line to parse
-    #   $2 string, name of the last section (i.e. module) parsed
+    #   $1: string, line to parse
+    #   $2: string, name of the last section (i.e. module) parsed
     #
     # Output:
     #   None
