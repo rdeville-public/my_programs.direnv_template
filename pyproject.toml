@@ -26,19 +26,12 @@ deps =
   -r./requirements.prod.txt
   -r./requirements.dev.txt
 commands =
-  # Linter on shell files with sh shell to ensure POSIX compliance
+  # Linter bash script using shellcheck
   bash -c '\
     shellcheck \
-      -s sh \
-      activate_direnv \
-      deactivate_direnv \
-      $(find . -type f \\( \
-        -name "*.sh" \
-        -not -path "./.*" \
-        -not -path "./python_venv/*" \\) ) '
-  # Re-linter on shell files without shell to ensure"
-  bash -c '\
-    shellcheck \
+      -s bash \
+      -x \
+      .envrc \
       activate_direnv \
       deactivate_direnv \
       $(find . -type f \\( \
