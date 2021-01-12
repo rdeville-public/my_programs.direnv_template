@@ -48,11 +48,11 @@ EOM
 
   for i_module in "${DIRENV_ROOT}"/modules/*.sh
   do
+    direnv_log "INFO" \
+      "Computing \`.envrc.ini\` template for module **$(basename "${i_module}")**."
     # shellcheck disable=SC2016,SC2026
     # - SC2016: Expression don't expand in single quotes
     # - SC2026: This word (`p`) is outside of quotes
-    direnv_log "INFO" \
-      "Computing \`.envrc.ini\` template for module **$(basename ${i_module})**."
     sed -n -e '/^#   ```ini/,/^#   ```/'p "${i_module}" \
       | sed -e 's/#   //' -e '/^```/d' >> "${output_file}"
     echo "" >> "${output_file}"
