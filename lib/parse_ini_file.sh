@@ -147,6 +147,8 @@ parse_ini_file()
     local key
     local value
     local var_access
+    local cmd_regexp='^cmd:'
+    local var_regexp='\$\{.*\}'
 
     # Remove space before `=`
     line=${line// =/=}
@@ -157,12 +159,12 @@ parse_ini_file()
     # Remove everything before the first =
     value="${line#*=}"
 
-    if [[ "${value}" =~ ^cmd: ]]
+    if [[ "${value}" =~ ${cmd_regexp} ]]
     then
       # Remove first string `cmd:` from the value
       cmd=${value/cmd:/}
       value=$( eval "${cmd}" )
-    elif [[ "${value}" =~ \$\{.*\} ]]
+    elif [[ "${value}" =~ ${var_regexp} ]]
     then
       # Escape in value variable
       value=${value//\$/\\\$}
