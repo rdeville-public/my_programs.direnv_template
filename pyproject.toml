@@ -38,6 +38,7 @@ commands =
         -name "*.sh" \
         -not -path "./.*" \
         -not -path "./python_venv/*" \\) ) '
+  bash -c 'DIRENV_ROOT="$(pwd)" ./tools/generate_source_docs.sh --dry-run'
   # Automatically sort import in python files
   isort .
   # Automatically format code
