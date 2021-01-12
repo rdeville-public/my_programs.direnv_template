@@ -2,7 +2,7 @@
 # """Generate mkdocs source code references documentation for bash scripts
 #
 # SYNOPSIS:
-#   ./generate_source_docs.sh
+#   ./generate_source_docs.sh [options]
 #
 # DESCRIPTION:
 #   THIS SCRIPT WILL ONLY WORK IF DIRECTORY ENVIRONMENT IS ACTIVATED !
@@ -11,6 +11,11 @@
 #   parse every scripts in nodes and folder nodes to generate their
 #   corresponding references source code documentation for mkdocs and output this
 #   documentation in their corresponding file in the `docs` folder.
+#
+# OPTIONS:
+#
+#   - `-d,--dry-run`<br>
+#     Specify the generation of the documentation is only for test purpose.
 #
 # """
 
@@ -24,6 +29,8 @@ NODE_LIST=(
   "modules"
   "tools"
 )
+
+DRY_RUN="false"
 
 parse_main_doc()
 {
@@ -468,7 +475,10 @@ generate_doc()
 
   # Build directory in documentation folder respecting the tree structure of the
   # `i_node` currently parsed.
-  mkdir -p "${DIRENV_ROOT}/docs/references/$(dirname "${i_node}")"
+  if [[ "${DRY_RUN}" == "false" ]]
+  then
+    mkdir -p "${DIRENV_ROOT}/docs/references/$(dirname "${i_node}")"
+  fi
 
   # Start building the complete documentation
   full_doc="# $(basename "${i_node}")\n\n"
@@ -488,7 +498,11 @@ generate_doc()
     method_content=$(sed -n -e "/${i_method_name}/,/# \"\"\"$/"p "${i_node}")
     full_doc+="$(generate_method_docs "${method_content}")"
   done <<<"$(grep -E '[a-zA-Z_]\(\)' "${i_node}")"
-  echo -e "${full_doc}" > "${output_file}"
+
+  if [[ "${DRY_RUN}" == "false" ]]
+  then
+    echo -e "${full_doc}" > "${output_file}"
+  fi
 }
 
 build_doc()
@@ -591,6 +605,16 @@ main()
     return 1
   fi
 
+  while [[ $# -gt 0 ]]
+  do
+    case $1 in
+      -d|--dry-run)
+        DRY_RUN="true"
+        shift
+        ;;
+    esac
+  done
+
   # Sourcing directory environment libraries scripts
   for i_lib in "${DIRENV_ROOT}"/lib/*.sh
   do
@@ -601,7 +625,7 @@ main()
   build_doc "${NODE_LIST[@]}" || return 1
 }
 
-main
+main "$@"
 
 # ------------------------------------------------------------------------------
 # VIM MODELINE
