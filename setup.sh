@@ -173,7 +173,7 @@ main()
 
     # If folder seems to already be set to use direnv but user did not specify
     # to upgrade
-    if [[ "$UPGRADE" = "false" ]]
+    if [[ "$UPGRADE" == "false" ]]
     then
       echo -e "${e_warning}\
 [WARNING] This folder seems to already be set to use direnv.
@@ -183,7 +183,7 @@ ${e_normal}"
       return 1
     # If folder seems to already be set to use direnv and user not specify to
     # upgrade
-    elif [[ "$UPGRADE" = "true" ]]
+    elif [[ "$UPGRADE" == "true" ]]
     then
       "${DIRENV_CLONE_ROOT}"/src/upgrade_direnv.sh || return 1
     fi
@@ -215,7 +215,7 @@ ${e_normal}"
     local file_from="$1"
     local file_to
 
-    if [[ "${i_node}" = ".envrc" ]]
+    if [[ "${i_node}" == ".envrc" ]]
     then
       file_to="${DIRENV_ROOT}/${i_node}"
     else
@@ -260,7 +260,7 @@ ${e_normal}"
       file_from="${DIRENV_CLONE_ROOT}/${i_node}"
       if [[ -f "${file_from}" ]]
       then
-        setup_file ${file_from}
+        setup_file "${file_from}"
       elif [[ -d "${file_from}" ]]
       then
         mkdir -p "${DIRENV_ROOT}/.direnv/${i_node}"
@@ -324,6 +324,7 @@ ${e_normal}"
     # Source last version of direnv_template library scripts
     for i_lib in "${DIRENV_CLONE_ROOT}"/lib/*.sh
     do
+      # shellcheck source=./lib/direnv_log.sh
       source "${i_lib}"
     done
 

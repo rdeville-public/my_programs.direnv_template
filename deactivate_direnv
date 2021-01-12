@@ -80,7 +80,7 @@ deactivate_direnv()
 
   get_methods_list()
   {
-    # """ Parse file passed as argument to export list of methods
+    # """Parse file passed as argument to export list of methods
     #
     # Parse a file and return the list of "first-level" methods, i.e. methods
     # which name is not idented. For instance, this metod is not a "first-level"

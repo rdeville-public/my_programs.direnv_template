@@ -59,7 +59,7 @@ activate_direnv()
 
   get_methods_list()
   {
-    # """ Parse file passed as argument to export list of methods
+    # """Parse file passed as argument to export list of methods
     #
     # Parse a file and return the list of "first-level" methods, i.e. methods
     # which name is not idented. For instance, this metod is not a "first-level"
@@ -210,7 +210,6 @@ activate_direnv()
     unset DIRENV_SRC_FOLDER
     unset DIRENV_BIN_FOLDER
     unset DIRENV_SHA1_FOLDER
-    unset DIRENV_TEMP_FOLDER
     unset DIRENV_MODULE_FOLDER
     unset DIRENV_CONFIG_PATH
     unset DIRENV_INI_SEP
@@ -258,7 +257,7 @@ activate_direnv()
     #   DIRENV_SHA1_FOLDER
     #
     # Arguments:
-    #   $1 string, path to the file to test
+    #   $1: string, path to the file to test
     #
     # Output:
     #   Log message to inform user SHA does not correspond
@@ -390,6 +389,7 @@ ${e_error} does not correspond to ${e_bold}\`${sha1_file}\`.${e_normal}"
     export DIRENV_SHA1_FOLDER="${DIRENV_ROOT}/.direnv/.sha1"
     export DIRENV_TEMP_FOLDER="${DIRENV_ROOT}/.direnv/tmp"
     export DIRENV_MODULE_FOLDER="${DIRENV_ROOT}/.direnv/modules"
+    export DIRENV_TEMPLATE_FOLDER="${DIRENV_ROOT}/.direnv/templates"
     export DIRENV_CONFIG_PATH="${DIRENV_ROOT}/${config_file_name}"
     export DIRENV_INI_SEP="%%%%"
 
@@ -423,7 +423,7 @@ ${e_error} does not correspond to ${e_bold}\`${sha1_file}\`.${e_normal}"
     #   DIRENV_CONFIG_PATH
     #
     # Arguments:
-    #   $1 string, name of the module from `.envrc.ini`
+    #   $1: string, name of the module from `.envrc.ini`
     #
     # Output:
     #   Log message if something went wrong
@@ -441,14 +441,14 @@ ${e_error} does not correspond to ${e_bold}\`${sha1_file}\`.${e_normal}"
     i_module=${i_module%:*}
     if ! [[ -e "${DIRENV_MODULE_FOLDER}/${i_module}.sh" ]]
     then
-      direnv_log "ERROR" "Module ${i_module} does not exists !"
-      direnv_log "ERROR" "Please review file ${DIRENV_CONFIG_PATH} to remove or comment it."
+      direnv_log "ERROR" "Module **${i_module}** does not exists !"
+      direnv_log "ERROR" "Please review file **${DIRENV_CONFIG_PATH}** to remove or comment it."
       return 1
     fi
     check_sha1 "${DIRENV_MODULE_FOLDER}/${i_module}.sh" || return 1
     # shellcheck source=./modules/direnv_management.sh
     source "${DIRENV_MODULE_FOLDER}/${i_module}.sh"
-    direnv_log "INFO" "Loading module ${i_module}"
+    direnv_log "INFO" "Loading module **${i_module}**."
     ${i_module} || error="true"
     if ! [[ -f "${DIRENV_TEMP_FOLDER}/.loaded_modules" ]] \
         || ! grep -q "${i_module}" "${DIRENV_TEMP_FOLDER}/.loaded_modules"
@@ -470,7 +470,7 @@ ${e_error} does not correspond to ${e_bold}\`${sha1_file}\`.${e_normal}"
     #   DIRENV_SHA1_FOLDER
     #
     # Arguments:
-    #   $1 string, path to the configuration file
+    #   $1: string, path to the configuration file
     #
     # Output:
     #   Error message if something went wrong
@@ -489,17 +489,17 @@ ${e_error} does not correspond to ${e_bold}\`${sha1_file}\`.${e_normal}"
 
     if ! [[ -f "${config_file_path}" ]]
     then
-      direnv_log "ERROR" "File ${config_file_path} does not exists."
+      direnv_log "ERROR" "File **${config_file_path}** does not exists."
       return 1
     else
-      if ! [ -f "${config_file_sha1}" ]
+      if ! [[ -f "${config_file_sha1}" ]]
       then
         sha1sum "${config_file_path}" | cut -d " " -f 1 > "${config_file_sha1}"
       else
         if ! check_sha1 "${config_file_path}"
         then
-          direnv_log "ERROR" "If you modify ${config_file_path}"
-          direnv_log "ERROR" "Please remove ${config_file_sha1}"
+          direnv_log "ERROR" "If you modify **${config_file_path}**"
+          direnv_log "ERROR" "Please remove **${config_file_sha1}**"
           direnv_log "ERROR" "And reactivate direnv."
           return 1
         fi
@@ -524,7 +524,7 @@ ${e_error} does not correspond to ${e_bold}\`${sha1_file}\`.${e_normal}"
     #   DIRENV_TEMP_FOLDER
     #
     # Arguments:
-    #   $1 string, name of the module from `.envrc.ini`
+    #   $1: string, name of the module from `.envrc.ini`
     #
     # Output:
     #   Log message if something went wrong
@@ -541,7 +541,7 @@ ${e_error} does not correspond to ${e_bold}\`${sha1_file}\`.${e_normal}"
       do
         # shellcheck source=./modules/direnv_management.sh
         source "${DIRENV_MODULE_FOLDER}/${i_module}.sh"
-        direnv_log "INFO" "Deactivating module ${i_module}"
+        direnv_log "INFO" "Deactivating module **${i_module}**."
         if command -v "deactivate_${i_module}" &> /dev/null
         then
           deactivate_"${i_module}"
@@ -605,7 +605,7 @@ ${e_error} does not correspond to ${e_bold}\`${sha1_file}\`.${e_normal}"
   done
 
   # Parse configuration file
-  load_config_file ${DIRENV_CONFIG_PATH} || return 1
+  load_config_file "${DIRENV_CONFIG_PATH}" || return 1
 
   # Load every module listed in configuration file
   for i_module in "${direnv_modules[@]}"
