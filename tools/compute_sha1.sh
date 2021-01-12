@@ -41,7 +41,7 @@ compute_sha1()
   #   DIRENV_SHA1
   #
   # Arguments:
-  #   $@ (optional) string, list of files and folders
+  #   $@: (optional) string, list of files and folders
   #
   # Output:
   #   Log informations
@@ -62,7 +62,7 @@ compute_sha1()
 
     if [[ -f "${file_from}" ]]
     then
-      direnv_log "INFO" "Computing sha1 of ${i_node}"
+      direnv_log "INFO" "Computing sha1 of **${i_node}**."
       sha1sum "${file_from}" | cut -d " " -f 1 > "${file_sha1}"
     elif [[ -d "${file_from}" ]]
     then
@@ -84,7 +84,7 @@ compute_sha1()
 
 main()
 {
-  # """Ensure directory environment is activated an run SHA1 sum comput
+  # """Ensure directory environment is activated an run SHA1 sum computation
   #
   # Globals:
   #   DIRENV_ROOT
@@ -106,7 +106,7 @@ main()
   local e_error="\e[0;31m"   # red fg
 
   # Ensure directory environment is activated
-  if [ -z "${DIRENV_ROOT}" ]
+  if [[ -z "${DIRENV_ROOT}" ]]
   then
     # Not using direnv_log as directory environment is not loaded yet
     echo -e "${e_error}[ERROR] Direnv must be activated to use this script.${e_normal}"
@@ -116,6 +116,7 @@ main()
   # Sourcing directory environment libraries scripts
   for i_lib in "${DIRENV_ROOT}"/lib/*.sh
   do
+    # shellcheck source=./lib/direnv_log.sh
     source "${i_lib}"
   done
 
