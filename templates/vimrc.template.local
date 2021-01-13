@@ -1,0 +1,20 @@
+" Your gitlab token. You get this via gitlabs web interface.
+let g:gitlab_token='<TPL:VIM_GITLAB_TOKEN>'
+
+" The gitlab server you want to access. Defaults to
+" https://gitlab.com. Don't use a trailing /!
+let g:gitlab_server='<TPL:VIM_GITLAB_SERVER>'
+
+" Defaults to 443
+let g:gitlab_server_port=443
+
+" You get this via gitlabs web interface (project settings).
+" This is automatically set via git remote!
+let g:gitlab_projectid=<TPL:VIM_GITLAB_PROJECT_ID>
+
+" Should the plugin send altering requests to the server?
+" (default true)
+let g:gitlab_alter=v:<TPL:VIM_GITLAB_ALTER>
+
+" Print debug messages
+let g:gitlab_debug=v:<TPL:VIM_GITLAB_DEBUG>
