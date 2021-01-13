@@ -498,8 +498,8 @@ ${e_error} does not correspond to ${e_bold}\`${sha1_file}\`.${e_normal}"
       else
         if ! check_sha1 "${config_file_path}"
         then
-          direnv_log "ERROR" "If you modify **${config_file_path}**"
-          direnv_log "ERROR" "Please remove **${config_file_sha1}**"
+          direnv_log "ERROR" "If you modify **${config_file_path}**."
+          direnv_log "ERROR" "Please remove **${config_file_sha1}**."
           direnv_log "ERROR" "And reactivate direnv."
           return 1
         fi
