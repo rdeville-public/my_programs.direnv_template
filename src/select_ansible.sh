@@ -1,33 +1,32 @@
-#!/bin/bash
-# """Select openstack configuration among those in `.envrc.ini`.
+#!/usr/bin/env bash
+# """Select ansible configuration among those in `.envrc.ini`.
 #
 # SYNOPSIS:
 #
-#   ./select_openstack.sh
+#   ./select_ansible.sh
 #
 # DESCRIPTION:
 #
 #   THIS SCRIPTS REQUIRES DIRECTORY ENVIRONMENT TO BE ACTIVATED.
 #
-#   This script allow to change easily which openstack project variable are
+#   This script allow to change easily which ansible project variable are
 #   loaded when loading the directory environment. It is based on the
-#   configurations of openstack module in `.envrc.ini`.
+#   configurations of ansible module in `.envrc.ini`.
 #
 # """
 
-# Array storing openstack configuration names
-OPENSTACK_CONFIG_NAMES=()
+# Array storing ansible configuration names
+ANSIBLE_CONFIG_NAMES=()
 
-# Ensure user setup its openstack project.
 get_project_config_name()
 {
-  # """Get openstack configuration name in `.envrc.ini`.
+  # """Get ansible configuration name in `.envrc.ini`.
   #
-  # Parse `.envrc.ini` file to extract openstack configuration name.
+  # Parse `.envrc.ini` file to extract ansible configuration name.
   #
   # Globals:
   #   DIRENV_ROOT
-  #   OPENSTACK_CONFIG_NAMES
+  #   ANSIBLE_CONFIG_NAMES
   #
   # Arguments:
   #   None
@@ -40,31 +39,32 @@ get_project_config_name()
   #
   # """
 
-  while read -r openstack_config_name
+  while read -r ansible_config_name
   do
-    openstack_config_name="${openstack_config_name//\]/}"
-    openstack_config_name="${openstack_config_name//\[/}"
-    openstack_config_name=$( echo "${openstack_config_name}" | cut -d ":" -f 2 )
-    OPENSTACK_CONFIG_NAMES+=( "${openstack_config_name}" )
-  done <<< "$( grep "openstack:" "${DIRENV_ROOT}/.envrc.ini" )"
+    # Remove brackest and extract configuration name
+    ansible_config_name="${ansible_config_name//\]/}"
+    ansible_config_name="${ansible_config_name//\[/}"
+    ansible_config_name=$( echo "${ansible_config_name}" | cut -d ":" -f 2 )
+    ANSIBLE_CONFIG_NAMES+=( "${ansible_config_name}" )
+  done <<< "$( grep "ansible:" "${DIRENV_ROOT}/.envrc.ini" )"
 }
 
 
 show_question()
 {
-  # """Show user an TUI description of the the possible openstack configuration.
+  # """Show user an TUI description of the the possible ansible configuration.
   #
-  # From variable `OPENSTACK_CONFIG_NAMES`, build the string which will then
-  # prompt the user a question with the name of openstack configuration.
+  # From variable `ANSIBLE_CONFIG_NAMES`, build the string which will then
+  # prompt the user a question with the name of ansible configuration.
   #
   # Globals:
-  #   OPENSTACK_CONFIG_NAMES
+  #   ANSIBLE_CONFIG_NAMES
   #
   # Arguments:
   #   None
   #
   # Output:
-  #   String with the available openstack configuration name.
+  #   String with the available ansible configuration name.
   #
   # Returns:
   #   None
@@ -72,14 +72,15 @@ show_question()
   # """
 
   local string="\
-Please select the OpenStack project you want to work on:\n"
-  for openstack_config_name in "${OPENSTACK_CONFIG_NAMES[@]}"
+Please select the ansible project you want to work on:\n"
+
+  for ansible_config_name in "${ANSIBLE_CONFIG_NAMES[@]}"
   do
     if [[ ${idx} -eq 1 ]]
     then
-      string+="  ${idx}) ${openstack_config_name} ${e_bold}[Default]${e_normal}\n"
+      string+="  ${idx}) ${ansible_config_name} ${e_bold}[Default]${e_normal}\n"
     else
-      string+="  ${idx}) ${openstack_config_name}\n"
+      string+="  ${idx}) ${ansible_config_name}\n"
     fi
     idx=$(( idx + 1 ))
   done
@@ -94,7 +95,7 @@ show_error()
   # """Show an error message to the user if options is not valid.
   #
   # Globals:
-  #   OPENSTACK_CONFIG_NAMES
+  #   ANSIBLE_CONFIG_NAMES
   #
   # Arguments:
   #   None
@@ -109,7 +110,7 @@ show_error()
 
   echo -e "${e_error}\
 ================================================================================
-[ERROR] Please choose amoung valid option, i.e. ${e_info}${e_bold}between 1 and $(( ${#OS_CONFIG_NAMES[@]} - 1 ))${e_normal}${e_error}
+[ERROR] Please choose amoung valid option, i.e. ${e_info}${e_bold}between 1 and $(( ${#ANSIBLE_CONFIG_NAMES[@]} - 1 ))${e_normal}${e_error}
 [ERROR] or press ${e_bold}Ctrl+C${e_normal}${e_error} to cancel.
 ================================================================================
 ${e_normal}"
@@ -138,22 +139,22 @@ show_reload_info()
 [INFO] You may need to reload the working environment for the change to take effects.
 [INFO]   - Either manually : ${e_bold}'source .direnv/bin/activate_direnv'.${e_normal}${e_info}
 [INFO]   - Either with direnv : ${e_bold}'direnv allow'.${e_normal}${e_info}
-[INFO] Check the value of variable OS_PROJECT_NAME to be sure.${e_normal}"
+[INFO] Check the value of variable ANSIBLE_CONFIG_NAMES to be sure.${e_normal}"
 
 }
 
 
 ask_user_os_config()
 {
-  # """Ask user which openstack configuration to choose
+  # """Ask user which ansible configuration to choose
   #
-  # Call `show_question` method to ask the user openstack configuration to choose.
-  # Then read an parse user answer. If answer is valid, save openstack
-  # configuration name in `${DIRENV_TEMP_FOLDER}`/openstack.envrc. Else prompt an
+  # Call `show_question` method to ask the user ansible configuration to choose.
+  # Then read an parse user answer. If answer is valid, save ansible
+  # configuration name in `${DIRENV_TEMP_FOLDER}`/ansible.envrc. Else prompt an
   # error.
   #
   # Globals:
-  #   OPENSTACK_CONFIG_NAMES
+  #   ANSIBLE_CONFIG_NAMES
   #   DIRENV_TEMP_FOLDER
   #
   # Arguments:
@@ -171,17 +172,18 @@ ask_user_os_config()
   show_question
   read -r answer
   # Automatically assign value 1 if user does not enter any value.
-  if [[ ${answer:=1} =~ ^-?[0-9]+$ ]] && [[ ${answer:=1} -lt ${idx} ]]
+  if [[ ${answer:=1} =~ ^-?[0-9]+$ ]] \
+    && [[ ${answer:=1} -lt ${#ANSIBLE_CONFIG_NAMES[@]} ]]
   then
     # If user answered a valid option, find the project to use
     idx=1
-    for openstack_config_name in "${OPENSTACK_CONFIG_NAMES[@]}"
+    for ansible_config_name in "${ANSIBLE_CONFIG_NAMES[@]}"
     do
       if [[ ${idx} -ne ${answer} ]]
       then
         idx=$(( idx + 1 ))
       else
-        echo "${openstack_config_name}" > "${DIRENV_TEMP_FOLDER}/openstack.envrc"
+        echo "${ansible_config_name}" > "${DIRENV_TEMP_FOLDER}/ansible.envrc"
         break
       fi
     done
@@ -194,9 +196,9 @@ ask_user_os_config()
 
 main()
 {
-  # """Main method to ask user which openstack configuration to use
+  # """Main method to ask user which ansible configuration to use
   #
-  # First get openstack configuration name from `.envrc.ini` file, then ask user
+  # First get ansible configuration name from `.envrc.ini` file, then ask user
   # which configuration to choose. Depending on the answer, show corresponding
   # informations message.
   #
@@ -222,7 +224,9 @@ main()
   local e_bold="\e[1m"       # bold
   local e_info="\e[0;32m"    # green fg
   local e_error="\e[0;31m"   # red fg
+
   get_project_config_name
+
   # Initialize stop condition
   answer=0
   # Ask the user

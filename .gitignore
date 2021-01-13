@@ -9,6 +9,8 @@ python_venv
 .envrc.ini
 bin
 .sha1/.envrc.ini.sha1
+*.ansible.cfg
+.vimrc.local
 
 # Templated gitignore from https://gitignore.io
 # ==============================================================================
