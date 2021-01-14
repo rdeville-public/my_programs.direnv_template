@@ -1,4 +1,4 @@
-<center>
+<div style="text-align:center">
 
   <!-- Project Title -->
   <a href="https://framagit.org/rdeville.public/my_programs/direnv_template/">
@@ -25,7 +25,7 @@ On other online git platforms, they are just mirror of the main repo.<br>
 Any issues, pull/merge requests, etc., might not be considered on those other
 platforms.
   </b>
-</center>
+</div>
 
 --------------------------------------------------------------------------------
 
