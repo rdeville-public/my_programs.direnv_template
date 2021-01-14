@@ -89,9 +89,9 @@ use of modules, description of the configuration file, etc., is available on a
 dedicated website, see [Direnv Template Online
 Documentation][direnv_template_online_doc].
 
-If [Direnv Template Online Documentation] is not accessible, you can render the
-online documentation locally on your computer, see section [Render documentation
-locally](#render-documentation-locally)
+If [Direnv Template Online Documentation][direnv_template_online_doc] is not
+accessible, you can render the online documentation locally on your computer,
+see section [Render documentation locally](#render-documentation-locally)
 
 **Why this repo since there is [direnv][direnv] ?**
 
@@ -144,6 +144,7 @@ mkdocs serve -f mkdocs.local.yml
 You can now browse the full documentation by visiting
 [http://localhost:8000][localhost].
 
+[mkdocs]: https://www.mkdocs.org/
 [localhost]: https://localhost:8000
 
 <!-- Links used multiple times in multiple sections -->
