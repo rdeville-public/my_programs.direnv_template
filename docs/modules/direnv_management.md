@@ -1,7 +1,8 @@
 # direnv_management
-
+Activate the direnv management module
 
 ## Description
+
 **Only work when loaded using [`direnv`](https://direnv.net).**
 
 Export variable to define the verbosity of the directory environment when
@@ -21,10 +22,10 @@ Parameters in `.envrc.ini` are:
 Export `DIRENV_DEBUG_LEVEL` if defined by the user. `DIRENV_DEBUG_LEVEL` can
 have following values in severity order:
 
-- `DEBUG`
-- `INFO`
-- `WARNING`
-- `ERROR` (default)
+  - `DEBUG`
+  - `INFO`
+  - `WARNING`
+  - `ERROR` (default)
 
 Depending on the value set, will show log corresponding to this value and
 values above. For instance, if value is set to `INFO`, log with `DEBUG`

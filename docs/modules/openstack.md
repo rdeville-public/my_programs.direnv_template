@@ -1,7 +1,8 @@
 # openstack
-
+Export openstack variables for python openstackclient
 
 ## Description
+
 Export variables `OS_*` required to be able to connect to openstack via
 python openstack client.
 
@@ -105,7 +106,7 @@ Corresponding entry in `.envrc.ini.template` are:
 # ```
 # [openstack]
 # default=project_config_name_1
-#
+
 # [openstack:project_config_name_1]
 # OS_AUTH_URL=https://test.com
 # ...

@@ -1,7 +1,8 @@
 # packer
-
+Export packer variables
 
 ## Description
+
 Export variable `PACKER_LOG` and `PACKER_LOG_PATH` to tell packer to print
 log and where to print them.
 

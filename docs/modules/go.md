@@ -1,7 +1,8 @@
 # go
-
+Export GO variables to install go modules locally
 
 ## Description
+
 Export `GOPATH` to directory environment to install GO modules locally to
 the directory environment if not defined by the user in `.envrc.ini`. Also
 created `pkg`, `src` and `bin`. Make every binary already installed in the

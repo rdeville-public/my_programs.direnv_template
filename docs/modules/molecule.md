@@ -1,7 +1,8 @@
 # molecule
-
+Export molecule variables
 
 ## Description
+
 Export variable `MOLECULE_NO_LOG` to tell molecule to show logs even if
 molecule log should be hidden.
 

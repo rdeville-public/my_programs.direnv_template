@@ -1,7 +1,8 @@
 # ansible
-
+Setup ansible configuration file and tree architecture
 
 ## Description
+
 From file `.direnv/templates/ansible.template.cfg` and provided variables in
 `.envrc.ini` create `ansible.cfg` file which defines some configuration
 override. User can also specify multiple ansible configuration, like

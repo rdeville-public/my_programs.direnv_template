@@ -1,28 +1,29 @@
 # vimrc_local
-
+Setup a `.vimrc.local` file at the root of the directory
 
 ## Description
+
 
 From file `.direnv/templates/vimrc.template.local` and provided variables in
 `.envrc.ini` create `.vimrc.local` file which defines some configuration
 vim configuration local to the repo.
 
 !!! important
-To be able to use this module you will need to add following lines in
-your `.vimrc`:
+    To be able to use this module you will need to add following lines in
+    your `.vimrc`:
 
-```vim
-if filereadable(".vimrc.local")
-source .vimrc.local
-endif
-```
+    ```vim
+    if filereadable(".vimrc.local")
+      source .vimrc.local
+    endif
+    ```
 
 !!! important
-This module also requires you to install some vim plugins with your
-favorite vim plugins manager:
+    This module also requires you to install some vim plugins with your
+    favorite vim plugins manager:
 
-- [vim-glissues](https://github.com/sirjofri/vim-glissues)<br>
-Vim gitlab issues.
+    - [vim-glissues](https://github.com/sirjofri/vim-glissues)<br>
+      Vim gitlab issues.
 
 Parameters in `.envrc.ini` are:
 
@@ -81,6 +82,6 @@ vim_gitlab_server=https://my.gitlab.tld
 vim_gitlab_project_id=12345
 # (optional) Should the plugin send altering requests to the server? (default `true`)
 vim_gitlab_alter=true
-# (optional) Print debug message (default `false`)                                    |
+# (optional) Print debug message (default `false`)
 vim_gitlab_debug=false
 ```

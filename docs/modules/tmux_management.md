@@ -1,7 +1,8 @@
 # tmux_management
-
+Start and attach a tmux session
 
 ## Description
+
 Automatically create a tmux session if session does not exists yet. Session
 name can be user defined or automatically set to the name of the directory.
 

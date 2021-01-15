@@ -1,7 +1,8 @@
 # folders
-
+Ensure specified folder exists, if not create them.
 
 ## Description
+
 Ensure list of specified folders provided by the user exists. If not, then
 create these folders.
 

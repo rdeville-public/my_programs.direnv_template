@@ -1,7 +1,8 @@
 # path_management
-
+Update `PATH` variable with user defined folder
 
 ## Description
+
 Update `PATH` variable to include either `.direnv/bin` and/or user defined
 folders.
 

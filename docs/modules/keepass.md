@@ -1,7 +1,8 @@
 # keepass
-
+Setup keepass wrapper script and variable to ease use of keepassxc-cli
 
 ## Description
+
 Install a symlink from `.direnv/src/keepass.sh` to `.direnv/bin/keepass` to
 be able to use script wrapper as keepass command. Also export some required
 variable used by the script. Finally ensure that exported variables are

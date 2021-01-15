@@ -1,7 +1,8 @@
 # python_management
-
+Setup a complete python virtual environment
 
 ## Description
+
 Ensure that python required version is installed. If yes, ensure that `pip3`
 is installed too. If yes, create and activate a python virtual environment,
 install basic python module `wheel` and `pip-tools`. Then depending on the
@@ -47,28 +48,28 @@ Define which `requirement.*.in` and `requirement.*.txt` to be processed.
 Possible values are:
 
 - `dev` (default), will process following files:
-- `requirements.dev.in`: Contain unpinned python dependencies used for
-development purpose.
-- `requirements.dev.txt`: Contain pinned python dependencies used for
-development purpose.
-- `requirements.docs.in`: Contain unpinned python dependencies used for
-documentation purpose.
-- `requirements.docs.txt`: Contain pinned python dependencies used for
-documentation purpose.
-- `requirements.prod.in`: Contain unpinned python dependencies used for
-production purpose.
-- `requirements.prod.txt`: Contain pinned python dependencies used for
-production purpose.
+    - `requirements.dev.in`: Contain unpinned python dependencies used for
+      development purpose.
+    - `requirements.dev.txt`: Contain pinned python dependencies used for
+      development purpose.
+    - `requirements.docs.in`: Contain unpinned python dependencies used for
+      documentation purpose.
+    - `requirements.docs.txt`: Contain pinned python dependencies used for
+      documentation purpose.
+    - `requirements.prod.in`: Contain unpinned python dependencies used for
+      production purpose.
+    - `requirements.prod.txt`: Contain pinned python dependencies used for
+      production purpose.
 - `docs` (default), will process following files:
-- `requirements.docs.in`: Contain unpinned python dependencies used for
-documentation purpose.
-- `requirements.docs.txt`: Contain pinned python dependencies used for
-documentation purpose.
+    - `requirements.docs.in`: Contain unpinned python dependencies used for
+      documentation purpose.
+    - `requirements.docs.txt`: Contain pinned python dependencies used for
+      documentation purpose.
 - `prod`, will process following files:
-- `requirements.prod.in`: Contain unpinned python dependencies used for
-production purpose.
-- `requirements.prod.txt`: Contain pinned python dependencies used for
-production purpose.
+    - `requirements.prod.in`: Contain unpinned python dependencies used for
+      production purpose.
+    - `requirements.prod.txt`: Contain pinned python dependencies used for
+      production purpose.
 
 ## `.envrc.ini` example
 
