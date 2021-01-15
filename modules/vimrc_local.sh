@@ -81,7 +81,7 @@
 #   vim_gitlab_project_id=12345
 #   # (optional) Should the plugin send altering requests to the server? (default `true`)
 #   vim_gitlab_alter=true
-#   # (optional) Print debug message (default `false`)                                    |
+#   # (optional) Print debug message (default `false`)
 #   vim_gitlab_debug=false
 #   ```
 #
