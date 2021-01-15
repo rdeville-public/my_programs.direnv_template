@@ -46,6 +46,21 @@ generate_doc()
   local module_name
   local doc_content
   local output_file
+  local module_index="${DIRENV_ROOT}/docs/modules/index.md"
+
+  cat <<EOM > ${module_index}
+# Modules
+
+Modules are part of \`direnv_template\` which run tasks related to a specific
+environment, for instance module \`ansible\` will only execute task related to
+\`ansible\`, etc.
+
+## List of exisitng modules
+
+| Module Name | Description |
+| :---------- | :---------- |
+EOM
+
 
   for i_node in "${DIRENV_MODULE_FOLDER}"/*.sh
   do
@@ -68,16 +83,22 @@ generate_doc()
     else
       output_file="${DIRENV_ROOT}/docs/modules/${module_name}.md"
       doc_content="$(sed -n "${line_from},${line_to}"p "${i_node}")"
-      doc_content="$(echo "${doc_content}" \
-                      | sed -e "s/^# *//g" \
-                            -e "s/^\"\"\".*//g" \
-                            -e "s/DESCRIPTION[:]/## Description/g" \
-                            -e "s/COMMANDS[:]/## Commands\n/g" \
-                            -e "s/OPTIONS[:]/## Options\n/g" \
-                            -e "s/SYNOPSIS[:]/## Synopsis\n/g" \
+
+      # Extract module documentation
+      doc_content="$(sed -n -e "/^# \"\"\".*/,/^# \"\"\"/"p "${i_node}" \
+                    | sed -e "s/^# \"\"\"//g" \
+                          -e "s/^# //g" \
+                          -e "s/^  //g" \
+                          -e "s/^#$//g" \
+                          -e "s/DESCRIPTION[:]/## Description\n/g" \
+                          -e "s/COMMANDS[:]/## Commands\n/g" \
+                          -e "s/OPTIONS[:]/## Options\n/g" \
+                          -e "s/SYNOPSIS[:]/## Synopsis\n/g" \
       )"
+      doc_header=$(echo "${doc_content}" | head -n 1)
       echo "# ${module_name}" > "${output_file}"
       echo "${doc_content}" >> "${output_file}"
+      echo "| [${module_name}](${module_name}.md) | ${doc_header} |" >> ${module_index}
     fi
     line_from=""
     line_to=""
