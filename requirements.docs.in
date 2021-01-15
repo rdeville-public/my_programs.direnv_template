@@ -17,9 +17,6 @@ mkdocs-minify-plugin
 # Plugin for adding monorepository support in Mkdocs.
 # https://pypi.org/project/mkdocs-monorepo-plugin/
 mkdocs-monorepo-plugin
-# A MkDocs plugin for including mermaid graphs in markdown sources
-# https://pypi.org/project/mkdocs-mermaid2-plugin/
-mkdocs-mermaid2-plugin
 # Mkdocs plugin that enables displaying the localized date of the last git
 # modification of a markdown file.
 # https://pypi.org/project/mkdocs-git-revision-date-localized-plugin/
