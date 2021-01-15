@@ -1,0 +1,42 @@
+# .envrc
+
+File that trigger `direnv` when entering a folder
+
+## Description
+
+THIS SCRIPT CAN ONLY BE USED WITH 'direnv' PROGRAM
+
+[Direnv](https://direnv.net/) is a tool allowing to automatically call a
+specific script (.envrc) when entering or leaving a directory.
+In short, once configured and allow, you will have no command to type, after
+going to your working directory.
+
+If you are using `direnv`, when entering a folder with this script, you
+might see following error:
+```
+direnv: error /path/to/.envrc is blocked. Run `direnv allow` to approve its
+content
+```
+
+This means you have to review its content with your favorite editor (vim
+here as example):
+```
+vim .envrc
+```
+
+If you understand and agree to what is scripted in .envrc (as well as
+invoked scripts from it), allow it for direnv:
+```
+direnv allow
+```
+
+And that is all, each time you will enter the directory where file
+`.envrc` is, this script will automatically be loaded when entering it and
+automatically unloaded when leaving it.
+
+
+
+## main()
+
+ **Activate the directory environment by sourcing `activate_direnv` script**
+ 
