@@ -24,7 +24,7 @@ parse_ini_file()
   #
   # ```ini
   # [section_name]
-  # # Comment
+  # ##  Comment
   # key_1 = foo
   # key_2 = bar
   # ```
@@ -66,7 +66,7 @@ parse_ini_file()
     #
     # ```ini
     # [section name]
-    # # Comment
+    # ##  Comment
     # key_1 = foo
     # key_2 = bar
     # ```
@@ -76,9 +76,9 @@ parse_ini_file()
     #
     # ```bash
     # echo ${section_name[key_1]}
-    # # Will echo foo
+    # ##  Will echo foo
     # echo ${section_name[key_2]}
-    # # Will echo bar
+    # ##  Will echo bar
     # ```
     #
     # Globals:
@@ -110,7 +110,7 @@ parse_ini_file()
     # following form:
     #
     # ```ini
-    # # This is a comment
+    # ##  This is a comment
     # key=value
     # key =value
     # key= value
@@ -132,7 +132,7 @@ parse_ini_file()
     #   DIRENV_INI_SEP
     #
     # Arguments:
-    #   $1: string, line to part
+    #   $1: string, line to parse
     #   $2: string, name of the module where key, value will be stored
     #
     # Output:
