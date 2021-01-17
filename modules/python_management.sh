@@ -51,28 +51,18 @@
 #   Possible values are:
 #
 #   - `dev` (default), will process following files:
-#       - `requirements.dev.in`: Contain unpinned python dependencies used for
-#         development purpose.
-#       - `requirements.dev.txt`: Contain pinned python dependencies used for
-#         development purpose.
-#       - `requirements.docs.in`: Contain unpinned python dependencies used for
-#         documentation purpose.
-#       - `requirements.docs.txt`: Contain pinned python dependencies used for
-#         documentation purpose.
-#       - `requirements.prod.in`: Contain unpinned python dependencies used for
-#         production purpose.
-#       - `requirements.prod.txt`: Contain pinned python dependencies used for
-#         production purpose.
+#       - `requirements.dev.*`: Contain unpinned (.in) and pinned (.txt) python
+#         dependencies used for development purpose.
+#       - `requirements.docs.*`: Contain unpinned (.in) and pinned (.txt) python
+#         dependencies used for documentation purpose.
+#       - `requirements.prod.*`: Contain unpinned (.in) and pinned (.txt) python
+#         dependencies used for production purpose.
 #   - `docs` (default), will process following files:
-#       - `requirements.docs.in`: Contain unpinned python dependencies used for
-#         documentation purpose.
-#       - `requirements.docs.txt`: Contain pinned python dependencies used for
-#         documentation purpose.
+#       - `requirements.docs.*`: Contain unpinned (.in) and pinned (.txt) python
+#         dependencies used for documentation purpose.
 #   - `prod`, will process following files:
-#       - `requirements.prod.in`: Contain unpinned python dependencies used for
-#         production purpose.
-#       - `requirements.prod.txt`: Contain pinned python dependencies used for
-#         production purpose.
+#       - `requirements.prod.*`: Contain unpinned (.in) and pinned (.txt) python
+#         dependencies used for production purpose.
 #
 #   ## `.envrc.ini` example
 #
@@ -294,6 +284,8 @@ python_management()
     then
       direnv_log "INFO" "Generation of the python ${type_requirements} requirements with pinned version."
       pip-compile "${unpin_requirements}" >> "${DIRENV_LOG_FOLDER}/module.python_management.log" 2>&1
+      # Remove ${DIRENV_ROOT} from pinned version of the requirements
+      sed -i -e "s/${DIRENV_ROOT//\//\\\/}\///g" ${pinned_requirements}
     fi
   }
 
