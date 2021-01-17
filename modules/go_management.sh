@@ -27,8 +27,8 @@
 #   ### `GOPATH`
 #
 #   Absolute path where the go directory will be created. Default is set to
-#   `${DIRENV_ROOT}/.direnv/tmp/go. User can use path contraction like `~`,
-#   `${HOME}` or ``${DIRENV_ROOT}``
+#   `${DIRENV_ROOT}/.direnv/tmp/go`. User can use path contraction like `~`,
+#   `${HOME}` or `${DIRENV_ROOT}`
 #
 #   ## `.envrc.ini` example
 #

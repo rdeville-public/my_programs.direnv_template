@@ -7,8 +7,8 @@
 #
 #   User can specify multiple folder to include to the `PATH` by specifying a
 #   valid `PATH` syntax, for instance
-#   `new_path="${DIRENV_ROOT}/path/to/bin:${DIRENV_ROOT}/another/path/to/bin` in
-#   `.envrc.ini
+#   `new_path="${DIRENV_ROOT}/path/to/bin:${DIRENV_ROOT}/another/path/to/bin"` in
+#   `.envrc.ini`
 #
 #   Export _DIRENV_OLD_PATH to store the `PATH` before being updated to be able
 #   to restore it later.

@@ -27,7 +27,7 @@
 #   ### `KEEPASS_DB`
 #
 #   Absolute path to a keepassxc database, you can use `~`, `${HOME}` or even
-#   `${DIRENV_ROOT} to define path relatively. The database cannot be unlocked
+#   `${DIRENV_ROOT}` to define path relatively. The database cannot be unlocked
 #   with password when using script `keepass.sh`, be sure to configure it to be
 #   unlocked using file.
 #

@@ -9,10 +9,10 @@
 #
 #   <center>
 #
-#   | Name             | Description                                         |
-#   | :--------------- | :-------------------------------------------------- |
-#   | `PACKER_LOG`     | Either 0 or 1 (default) to tell packer to print log |
-#   | `PACKER_LOG_PATH | Absolute path to the file where log will be printed |
+#   | Name              | Description                                         |
+#   | :---------------- | :-------------------------------------------------- |
+#   | `PACKER_LOG`      | Either 0 or 1 (default) to tell packer to print log |
+#   | `PACKER_LOG_PATH` | Absolute path to the file where log will be printed |
 #
 #   </center>
 #
