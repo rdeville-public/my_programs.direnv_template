@@ -27,11 +27,15 @@ git.
 
 Parameters in `.envrc.ini` are:
 
+<center>
+
 | Name             | Description                               |
 | :--------------- | :---------------------------------------- |
 | `default`        | Name of the default ansible configuration |
 | `ANSIBLE_CONFIG` | Path to the `ansible.cfg file`            |
 | `inventory`      | (optional) Path to the inventory          |
+
+</center>
 
 
 ## Parameters

@@ -6,6 +6,8 @@ environment, for instance module `ansible` will only execute task related to
 
 ## List of exisitng modules
 
+<center>
+
 | Module Name | Description |
 | :---------- | :---------- |
 | [ansible](ansible.md) | Setup ansible configuration file and tree architecture |
@@ -21,3 +23,5 @@ environment, for instance module `ansible` will only execute task related to
 | [python_management](python_management.md) | Setup a complete python virtual environment |
 | [tmux_management](tmux_management.md) | Start and attach a tmux session |
 | [vimrc_local](vimrc_local.md) | Setup a `.vimrc.local` file at the root of the directory |
+
+</center>
