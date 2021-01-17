@@ -48,7 +48,7 @@ generate_doc()
   local output_file
   local module_index="${DIRENV_ROOT}/docs/modules/index.md"
 
-  cat <<EOM > ${module_index}
+  cat <<EOM > "${module_index}"
 # Modules
 
 Modules are part of \`direnv_template\` which run tasks related to a specific
@@ -56,6 +56,8 @@ environment, for instance module \`ansible\` will only execute task related to
 \`ansible\`, etc.
 
 ## List of exisitng modules
+
+<center>
 
 | Module Name | Description |
 | :---------- | :---------- |
@@ -98,11 +100,16 @@ EOM
       doc_header=$(echo "${doc_content}" | head -n 1)
       echo "# ${module_name}" > "${output_file}"
       echo "${doc_content}" >> "${output_file}"
-      echo "| [${module_name}](${module_name}.md) | ${doc_header} |" >> ${module_index}
+      echo "| [${module_name}](${module_name}.md) | ${doc_header} |" >> "${module_index}"
     fi
     line_from=""
     line_to=""
   done
+
+  cat <<EOM >> "${module_index}"
+
+</center>
+EOM
 }
 
 main()
