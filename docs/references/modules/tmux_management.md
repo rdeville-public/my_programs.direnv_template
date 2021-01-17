@@ -14,10 +14,14 @@ User can also define a command to be executed when starting the session.
 
 Parameters in `.envrc.ini` are:
 
+<center>
+
 | Name           | Description                                           |
 | :------------- | :---------------------------------------------------- |
 | `session_name` | Name of the tmux session                              |
 | `command`      | Command to be executed when starting the tmux session |
+
+</center>
 
 ## Parameters
 

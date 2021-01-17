@@ -14,18 +14,22 @@ file, not by a password !
 
 Parameters in `.envrc.ini` are:
 
+<center>
+
 | Name               | Description                                                                                             |
 | :----------------- | :------------------------------------------------------------------------------------------------------ |
 | `KEEPASS_DB`       | Absolute path to a keepassxc database                                                                   |
 | `KEEPASS_KEYFILE`  | Absolute path to a file to unlock keepassxc database                                                    |
 | `KEEPASS_NAME`     | (optional) Explicit name for the database, like `perso`, `pro`, etc., which can be used in your prompt  |
 
+</center>
+
 ## Parameters
 
 ### `KEEPASS_DB`
 
 Absolute path to a keepassxc database, you can use `~`, `${HOME}` or even
-`${DIRENV_ROOT} to define path relatively. The database cannot be unlocked
+`${DIRENV_ROOT}` to define path relatively. The database cannot be unlocked
 with password when using script `keepass.sh`, be sure to configure it to be
 unlocked using file.
 
@@ -62,7 +66,6 @@ KEEPASS_NAME=Perso
 
 
 ## keepass()
-deactivate_keepass()
 
  **Install keepass wrapper and export keepass variable required for wrapper**
  
@@ -76,9 +79,15 @@ deactivate_keepass()
  - `KEEPASS_DB`
  - `KEEPASS_KEYFILE`
  - `KEEPASS_NAME`
- - `KEEPASS_DB`
- - `KEEPASS_KEYFILE`
- - `KEEPASS_NAME`
+
+ **Output**
+
+ - Log information
+
+ **Returns**
+
+ - 1 if required variables are not set or if database can not be unlocked
+ - 0 if everything is right and database can be unlocked
 
 ### install_keepass_script()
 
@@ -91,6 +100,7 @@ deactivate_keepass()
 >
 > - `DIRENV_BIN_FOLDER`
 > - `DIRENV_SRC_FOLDER`
+>
 >
 
 ### check_variable()
@@ -117,6 +127,7 @@ deactivate_keepass()
 > - 1 if variable value is not set
 > - 0 if variable value is set
 >
+>
 
 ### check_file()
 
@@ -142,16 +153,16 @@ deactivate_keepass()
 > - 1 if file does not exists
 > - 0 if file does exists
 >
+>
 
 ## deactivate_keepass()
 
-> **Unset exported variables for keepass module**
-> 
-> Unset `KEEPASS_*` variable previously exported.
->
-> **Globals**
->
-> - `KEEPASS_DB`
-> - `KEEPASS_KEYFILE`
-> - `KEEPASS_NAME`
->
+ **Unset exported variables for keepass module**
+ 
+ Unset `KEEPASS_*` variable previously exported.
+
+ **Globals**
+
+ - `KEEPASS_DB`
+ - `KEEPASS_KEYFILE`
+ - `KEEPASS_NAME`

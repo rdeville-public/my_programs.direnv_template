@@ -9,18 +9,22 @@ folders.
 
 User can specify multiple folder to include to the `PATH` by specifying a
 valid `PATH` syntax, for instance
-`new_path="${DIRENV_ROOT}/path/to/bin:${DIRENV_ROOT}/another/path/to/bin` in
-`.envrc.ini
+`new_path="${DIRENV_ROOT}/path/to/bin:${DIRENV_ROOT}/another/path/to/bin"` in
+`.envrc.ini`
 
 Export _DIRENV_OLD_PATH to store the `PATH` before being updated to be able
 to restore it later.
 
 Parameters in `.envrc.ini` are:
 
+<center>
+
 | Name                 | Description                                                |
 | :--------------------| :--------------------------------------------------------- |
 | `add_direnv_to_path` | Boolean to tell if `.direnv/bin` should be added to `PATH` |
 | `new_path`           | Path to folders to be added to `PATH`                      |
+
+</center>
 
 ## Parameters
 
@@ -55,7 +59,6 @@ new_path=${DIRENV_ROOT}/path/to/be/added:${DIRENV_ROOT}/another/bin
 
 
 ## path_management()
-deactivate_path_management()
 
  **Update `PATH` to include new folders**
  
@@ -64,9 +67,6 @@ deactivate_path_management()
 
  **Globals**
 
- - `PATH`
- - `_OLD_VIRTUAL_PATH`
- - `_DIRENV_OLD_PATH`
  - `PATH`
  - `_OLD_VIRTUAL_PATH`
  - `_DIRENV_OLD_PATH`

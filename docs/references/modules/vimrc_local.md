@@ -28,6 +28,8 @@ vim configuration local to the repo.
 
 Parameters in `.envrc.ini` are:
 
+<center>
+
 | Name                    | Description                                                                         |
 | :---------------------- | :---------------------------------------------------------------------------------- |
 | `vim_gitlab_token`      | Gitlab API access token                                                             |
@@ -35,6 +37,8 @@ Parameters in `.envrc.ini` are:
 | `vim_gitlab_project_id` | ID of your project in your gitlab server                                            |
 | `vim_gitlab_alter`      | (optional) Should the plugin send altering requests to the server? (default `true`) |
 | `vim_gitlab_debug`      | (optional) Print debug message (default `false`)                                    |
+
+</center>
 
 
 ## Parameters
@@ -83,7 +87,7 @@ vim_gitlab_server=https://my.gitlab.tld
 vim_gitlab_project_id=12345
 # (optional) Should the plugin send altering requests to the server? (default `true`)
 vim_gitlab_alter=true
-# (optional) Print debug message (default `false`)                                    |
+# (optional) Print debug message (default `false`)
 vim_gitlab_debug=false
 ```
 
@@ -123,4 +127,5 @@ vim_gitlab_debug=false
 >
 > - 1 if at least one variable is not defined
 > - 0 if every variables are defined
+>
 >

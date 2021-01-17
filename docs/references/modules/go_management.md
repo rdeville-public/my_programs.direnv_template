@@ -1,4 +1,4 @@
-# go.sh
+# go_management.sh
 
 Export GO variables to install go modules locally
 
@@ -50,7 +50,7 @@ GOPATH="${DIRENV_ROOT}/.direnv/tmp/go"
 ## go_management()
 
  **Update GOPATH to be local to the directory environment**
-
+ 
  Export `GOPATH` to directory environment to install GO modules locally to
  the directory environment if not defined by the user in `.envrc.ini`. Also
  created `pkg`, `src` and `bin`. Finally, create a symlink for every file in
@@ -74,7 +74,7 @@ GOPATH="${DIRENV_ROOT}/.direnv/tmp/go"
 ## deactivate_go_management()
 
  **Unset exported variables for go management module**
-
+ 
  Unset `GOPATH` variable previously exported.
 
  **Globals**

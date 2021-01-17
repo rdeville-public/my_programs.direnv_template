@@ -42,7 +42,7 @@ Parameters in `.envrc.ini` are:
 | `OS_IDENTITY_API_VERSION`  | Value of `OS_IDENTITY_API_VERSION` in openrc.sh |
 | `OS_USER_DOMAIN_NAME`      | Value of `OS_USER_DOMAIN_NAME` in openrc.sh     |
 | `OS_USERNAME`              | Value of `OS_USERNAME` in openrc.sh             |
-| `OS_PASSWORD`              | Password to connect to the openstack` instance  |
+| `OS_PASSWORD`              | Password to connect to the openstack instance   |
 
 </center>
 

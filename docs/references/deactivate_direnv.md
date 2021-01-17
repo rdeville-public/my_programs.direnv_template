@@ -54,6 +54,7 @@ methods used by this script.
 >
 > - Log message to inform the user
 >
+>
 
 ### get_methods_list()
 
@@ -79,6 +80,7 @@ methods used by this script.
 > - 0 if file has "first-level" methods
 > - 1 if file does not have "first-level" methods
 >
+>
 
 ### unset_methods()
 
@@ -97,6 +99,7 @@ methods used by this script.
 > - 0 if file has "first-level" methods
 > - 1 if file does not have "first-level" methods
 >
+>
 
 ### unset_modules()
 
@@ -110,6 +113,7 @@ methods used by this script.
 >
 > - `DIRENV_TEMP_FOLDER`
 > - `DIRENV_MODULE_FOLDER`
+>
 >
 
 ### unset_all_methods_and_vars()
@@ -128,4 +132,5 @@ methods used by this script.
 > - `DIRENV_MODULE_FOLDER`
 > - `DIRENV_CONFIG_PATH`
 > - `DIRENV_INI_SEP`
+>
 >

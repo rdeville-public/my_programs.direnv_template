@@ -30,6 +30,8 @@ REMARK: There is not default value set for any `OS_*` variable.
 
 Parameters in `.envrc.ini` are:
 
+<center>
+
 | Name                       | Description                                     |
 | :------------------------- | :---------------------------------------------- |
 | `default`                  | Name of the default openstack project           |
@@ -41,7 +43,9 @@ Parameters in `.envrc.ini` are:
 | `OS_IDENTITY_API_VERSION`  | Value of `OS_IDENTITY_API_VERSION` in openrc.sh |
 | `OS_USER_DOMAIN_NAME`      | Value of `OS_USER_DOMAIN_NAME` in openrc.sh     |
 | `OS_USERNAME`              | Value of `OS_USERNAME` in openrc.sh             |
-| `OS_PASSWORD`              | Password to connect to the openstack` instance  |
+| `OS_PASSWORD`              | Password to connect to the openstack instance   |
+
+</center>
 
 ## Parameters
 
@@ -172,7 +176,6 @@ OS_USER_DOMAIN_NAME=domain_name
 
 
 ## openstack()
-deactivate_openstack()
 
  **Export variables for openstack module**
  
@@ -196,15 +199,11 @@ deactivate_openstack()
  - `OS_REGION_NAME`
  - `OS_INTERFACE`
  - `OS_IDENTITY_API_VERSION`
- - `OS_PROJECT_ID`
- - `OS_PROJECT_NAME`
- - `OS_AUTH_URL`
- - `OS_USER_DOMAIN_NAME`
- - `OS_USERNAME`
- - `OS_PASSWORD`
- - `OS_REGION_NAME`
- - `OS_INTERFACE`
- - `OS_IDENTITY_API_VERSION`
+
+ **Returns**
+
+ - 1 if some openstack required variables are not defined
+ - 0 if the module is correctly loaded
 
 ### install_openstack_script()
 
@@ -218,6 +217,7 @@ deactivate_openstack()
 >
 > - `DIRENV_BIN_FOLDER`
 > - `DIRENV_SRC_FOLDER`
+>
 >
 
 ### save_default_openstack_config()
@@ -241,6 +241,7 @@ deactivate_openstack()
 >
 > - Name of the current openstack project
 >
+>
 
 ### eval_openstack_var()
 
@@ -260,22 +261,22 @@ deactivate_openstack()
 > - 1 if at least one variable is not defined
 > - 0 if every variables are defined
 >
+>
 
 ## deactivate_openstack()
 
-> **Unset exported variables for openstack module**
-> 
-> Unset every `OS_*` variables previously exported.
->
-> **Globals**
->
-> - `OS_PROJECT_ID`
-> - `OS_PROJECT_NAME`
-> - `OS_AUTH_URL`
-> - `OS_USER_DOMAIN_NAME`
-> - `OS_USERNAME`
-> - `OS_PASSWORD`
-> - `OS_REGION_NAME`
-> - `OS_INTERFACE`
-> - `OS_IDENTITY_API_VERSION`
->
+ **Unset exported variables for openstack module**
+ 
+ Unset every `OS_*` variables previously exported.
+
+ **Globals**
+
+ - `OS_PROJECT_ID`
+ - `OS_PROJECT_NAME`
+ - `OS_AUTH_URL`
+ - `OS_USER_DOMAIN_NAME`
+ - `OS_USERNAME`
+ - `OS_PASSWORD`
+ - `OS_REGION_NAME`
+ - `OS_INTERFACE`
+ - `OS_IDENTITY_API_VERSION`

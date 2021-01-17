@@ -1,4 +1,4 @@
-# go
+# go_management
 Export GO variables to install go modules locally
 
 ## Description
@@ -28,8 +28,8 @@ Parameters in `.envrc.ini` are:
 ### `GOPATH`
 
 Absolute path where the go directory will be created. Default is set to
-`${DIRENV_ROOT}/.direnv/tmp/go. User can use path contraction like `~`,
-`${HOME}` or ``${DIRENV_ROOT}``
+`${DIRENV_ROOT}/.direnv/tmp/go`. User can use path contraction like `~`,
+`${HOME}` or `${DIRENV_ROOT}`
 
 ## `.envrc.ini` example
 

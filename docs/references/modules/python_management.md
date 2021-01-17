@@ -19,12 +19,16 @@ etc., print an error
 
 Parameters in `.envrc.ini` are:
 
+<center>
+
 | Name                | Description                                               |
 | :------------------ | :-------------------------------------------------------- |
 | `python_version`    | Minimum main python version to be installed (default `3`) |
 | `python_release`    | Minimum Python release to be installed (default `8`)      |
 | `python_patch`      | Minimum Python patch to be installed (default `0`)        |
 | `requirements_type` | Type of requirements to be installed (default `dev`)      |
+
+</center>
 
 ## Parameters
 
@@ -101,7 +105,6 @@ requirements_type=dev
 
 
 ## python_management()
-deactivate_python_management()
 
  **Setup a complete python virtual environment**
  
@@ -117,6 +120,17 @@ deactivate_python_management()
  
  If anything goes wrong, like wrong python version, `pip3` not installed,
  etc., print an error
+
+ **Globals**
+
+ - `DIRENV_ROOT`
+ - `_DIRENV_OLD_PATH`
+ - `_OLD_VIRTUAL_PATH`
+
+ **Returns**
+
+ - 1 if something went wrong when building python virtual environment
+ - 0 if everything went right and python virtual environment is activated
 
 ### check_python_var()
 
@@ -134,6 +148,7 @@ deactivate_python_management()
 >
 > - 1 if python veriables in `.envrc.ini` are not integers
 > - 0 if python veriables in `.envrc.ini` are integers
+>
 >
 
 ### check_python_version()
@@ -153,6 +168,7 @@ deactivate_python_management()
 >
 > - 1 if python minimum version are not met
 > - 0 if python minimum version are met
+>
 >
 
 ### compute_pinned_dependencies()
@@ -180,6 +196,7 @@ deactivate_python_management()
 > - Warning informations if unpinned requirements file does not exists
 > - Log informations when computing pinned requirements file
 >
+>
 
 ### install_pinned_dependencies()
 
@@ -202,6 +219,7 @@ deactivate_python_management()
 > **Output**
 >
 > - Log informations about dependencies installation in `.direnv/log/python_management.log`
+>
 >
 
 ### build_virtual_env()
@@ -233,10 +251,9 @@ deactivate_python_management()
 > - 1 if something went wrong like wrong python version, etc.
 > - 0 if everything went right
 >
+>
 
 ## deactivate_python_management()
 
-> **Deactivate python virtual environment**
-> 
->
->
+ **Deactivate python virtual environment**
+ 

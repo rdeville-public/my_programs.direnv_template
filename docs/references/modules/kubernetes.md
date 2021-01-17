@@ -11,9 +11,13 @@ it in your shell prompt.
 
 Parameters in `.envrc.ini` are:
 
+<center>
+
 | Name          | Description                                         |
 | :------------ | :-------------------------------------------------- |
 | `KUBECONFIG`  | Absolute path to a kubernetes kube_config file      |
+
+</center>
 
 ## Parameters
 
@@ -40,7 +44,6 @@ KUBECONFIG=path/to/kube_config
 
 
 ## kubernetes()
-deactivate_kubernetes()
 
  **Export variables for kubernetes**
  
@@ -51,8 +54,6 @@ deactivate_kubernetes()
 
  **Globals**
 
- - `KUBECONFIG`
- - `KUBE_ENV`
  - `KUBECONFIG`
  - `KUBE_ENV`
 

@@ -28,11 +28,15 @@ git.
 
 Parameters in `.envrc.ini` are:
 
+<center>
+
 | Name             | Description                               |
 | :--------------- | :---------------------------------------- |
 | `default`        | Name of the default ansible configuration |
 | `ANSIBLE_CONFIG` | Path to the `ansible.cfg file`            |
 | `inventory`      | (optional) Path to the inventory          |
+
+</center>
 
 
 ## Parameters
@@ -92,7 +96,6 @@ inventory="${DIRENV_ROOT}/inventory"
 
 
 ## ansible()
-deactivate_ansible()
 
  **Export variables for ansible module and generate configuration file**
  
@@ -105,7 +108,11 @@ deactivate_ansible()
  **Globals**
 
  - `ANSIBLE_CONFIG`
- - `ANSIBLE_CONFIG`
+
+ **Returns**
+
+ - 1 if some ansible required variables are not defined
+ - 0 if the module is correctly loaded
 
 ### install_ansible_script()
 
@@ -120,6 +127,7 @@ deactivate_ansible()
 >
 > - `DIRENV_BIN_FOLDER`
 > - `DIRENV_SRC_FOLDER`
+>
 >
 
 ### save_default_ansible_config()
@@ -143,6 +151,7 @@ deactivate_ansible()
 >
 > - Name of the current ansible configuration
 >
+>
 
 ### eval_ansible_var()
 
@@ -162,13 +171,13 @@ deactivate_ansible()
 > - 1 if at least one variable is not defined
 > - 0 if every variables are defined
 >
+>
 
 ## deactivate_ansible()
 
-> **Unset exported variables for ansible module**
-> 
->
-> **Globals**
->
-> - `ANSIBLE_CONFIG`
->
+ **Unset exported variables for ansible module**
+ 
+
+ **Globals**
+
+ - `ANSIBLE_CONFIG`

@@ -13,7 +13,7 @@ environment, for instance module `ansible` will only execute task related to
 | [ansible](ansible.md) | Setup ansible configuration file and tree architecture |
 | [direnv_management](direnv_management.md) | Activate the direnv management module |
 | [folders](folders.md) | Ensure specified folder exists, if not create them. |
-| [go](go.md) | Export GO variables to install go modules locally |
+| [go_management](go_management.md) | Export GO variables to install go modules locally |
 | [keepass](keepass.md) | Setup keepass wrapper script and variable to ease use of keepassxc-cli |
 | [kubernetes](kubernetes.md) | Export kubernetes variables |
 | [molecule](molecule.md) | Export molecule variables |

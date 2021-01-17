@@ -79,6 +79,7 @@ environment.
 > - 0 if file has "first-level" methods
 > - 1 if file does not have "first-level" methods
 >
+>
 
 ### unset_methods()
 
@@ -97,12 +98,14 @@ environment.
 > - 0 if file has "first-level" methods
 > - 1 if file does not have "first-level" methods
 >
+>
 
 ### unset_modules()
 
 > **Unset modules from list of already loaded modules**
 > 
 > The process to unset modules is compose of two part:
+> 
 >   - Unset methods defined in the module
 >   - Unset associative array related to this module
 >
@@ -111,12 +114,14 @@ environment.
 > - `DIRENV_TEMP_FOLDER`
 > - `DIRENV_MODULE_FOLDER`
 >
+>
 
 ### unset_all_methods_and_vars()
 
 > **Unset all methods and variables set to load directory environment**
 > 
 > The process to unset all methods and variables is composed of two part:
+> 
 >   - Unset methods and variables defined by modules
 >   - Unset methods defined by library scripts
 >
@@ -133,6 +138,7 @@ environment.
 > - `DIRENV_MODULE_FOLDER`
 > - `DIRENV_CONFIG_PATH`
 > - `DIRENV_INI_SEP`
+>
 >
 
 ### install_upgrade_script()
@@ -152,6 +158,7 @@ environment.
 >
 > - Log message to inform user of the installation of the script
 >
+>
 
 ### check_if_direnv()
 
@@ -170,6 +177,7 @@ environment.
 >
 > - 0 if SHA1 of deactivate_direnv is valid and method is set
 > - 1 if SHA1 of deactivate_direnv is not valid
+>
 >
 
 ### set_direnv()
@@ -198,6 +206,7 @@ environment.
 >
 > - 0 if SHA1 of scripts are valid
 > - 1 if SHA1 of scripts are not valid
+>
 >
 
 ### load_module()
@@ -229,6 +238,7 @@ environment.
 > - 0 if module is correctly loaded
 > - 1 if module can not be loaded
 >
+>
 
 ### load_config_file()
 
@@ -257,6 +267,7 @@ environment.
 >
 > - 0 if the configuration file has been loaded.
 > - 1 if there is an error with the configuration file.
+>
 >
 
 ### deactivate_modules()
@@ -289,6 +300,7 @@ environment.
 > - 0 if module is correctly loaded
 > - 1 if module can not be loaded
 >
+>
 
 ### safe_exit()
 
@@ -306,4 +318,5 @@ environment.
 > **Returns**
 >
 > - 1 in any case to indicate an error occurs
+>
 >

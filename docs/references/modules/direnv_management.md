@@ -11,10 +11,14 @@ loading it and source parent directory environment.
 
 Parameters in `.envrc.ini` are:
 
+<center>
+
 | Name                   | Description                                                                                        |
 | :--------------------- | :------------------------------------------------------------------------------------------------- |
 | `DIRENV_DEBUG_LEVEL`   | Select the level of verbosity                                                                      |
 | `source_up`            | If set to `true` (default: `false`), load parent directory environment when loaded using `direnv`  |
+
+</center>
 
 ## Parameters
 
@@ -57,7 +61,6 @@ DIRENV_DEBUG_LEVEL="DEBUG"
 
 
 ## direnv_management()
-deactivate_direnv_management()
 
  **Activate the direnv management module**
  
@@ -68,7 +71,6 @@ deactivate_direnv_management()
 
  **Globals**
 
- - `DIRENV_DEBUG_LEVEL`
  - `DIRENV_DEBUG_LEVEL`
 
 ## deactivate_direnv_management()

@@ -314,3 +314,4 @@ KeePass database, directly from the command line.
 >
 > - Log informations colored
 >
+>
