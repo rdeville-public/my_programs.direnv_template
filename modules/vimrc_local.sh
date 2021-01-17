@@ -26,13 +26,17 @@
 #
 #   Parameters in `.envrc.ini` are:
 #
-# | Name                    | Description                                                                         |
-# | :---------------------- | :---------------------------------------------------------------------------------- |
-# | `vim_gitlab_token`      | Gitlab API access token                                                             |
-# | `vim_gitlab_server`     | URL to your gitlab server                                                           |
-# | `vim_gitlab_project_id` | ID of your project in your gitlab server                                            |
-# | `vim_gitlab_alter`      | (optional) Should the plugin send altering requests to the server? (default `true`) |
-# | `vim_gitlab_debug`      | (optional) Print debug message (default `false`)                                    |
+#   <center>
+#
+#   | Name                    | Description                                                                         |
+#   | :---------------------- | :---------------------------------------------------------------------------------- |
+#   | `vim_gitlab_token`      | Gitlab API access token                                                             |
+#   | `vim_gitlab_server`     | URL to your gitlab server                                                           |
+#   | `vim_gitlab_project_id` | ID of your project in your gitlab server                                            |
+#   | `vim_gitlab_alter`      | (optional) Should the plugin send altering requests to the server? (default `true`) |
+#   | `vim_gitlab_debug`      | (optional) Print debug message (default `false`)                                    |
+#
+#   </center>
 #
 #
 #   ## Parameters

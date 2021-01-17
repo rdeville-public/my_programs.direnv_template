@@ -15,10 +15,14 @@
 #
 #   Parameters in `.envrc.ini` are:
 #
+#   <center>
+#
 #   | Name                 | Description                                                |
 #   | :--------------------| :--------------------------------------------------------- |
 #   | `add_direnv_to_path` | Boolean to tell if `.direnv/bin` should be added to `PATH` |
 #   | `new_path`           | Path to folders to be added to `PATH`                      |
+#
+#   </center>
 #
 #   ## Parameters
 #

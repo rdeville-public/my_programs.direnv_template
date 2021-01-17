@@ -12,10 +12,14 @@
 #
 #   Parameters in `.envrc.ini` are:
 #
+#   <center>
+#
 #   | Name           | Description                                           |
 #   | :------------- | :---------------------------------------------------- |
 #   | `session_name` | Name of the tmux session                              |
 #   | `command`      | Command to be executed when starting the tmux session |
+#
+#   </center>
 #
 #   ## Parameters
 #

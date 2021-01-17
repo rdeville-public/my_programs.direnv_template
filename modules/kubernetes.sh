@@ -9,9 +9,13 @@
 #
 #   Parameters in `.envrc.ini` are:
 #
+#   <center>
+#
 #   | Name          | Description                                         |
 #   | :------------ | :-------------------------------------------------- |
 #   | `KUBECONFIG`  | Absolute path to a kubernetes kube_config file      |
+#
+#   </center>
 #
 #   ## Parameters
 #

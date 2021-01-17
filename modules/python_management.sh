@@ -17,12 +17,16 @@
 #
 #   Parameters in `.envrc.ini` are:
 #
+#   <center>
+#
 #   | Name                | Description                                               |
 #   | :------------------ | :-------------------------------------------------------- |
 #   | `python_version`    | Minimum main python version to be installed (default `3`) |
 #   | `python_release`    | Minimum Python release to be installed (default `8`)      |
 #   | `python_patch`      | Minimum Python patch to be installed (default `0`)        |
 #   | `requirements_type` | Type of requirements to be installed (default `dev`)      |
+#
+#   </center>
 #
 #   ## Parameters
 #

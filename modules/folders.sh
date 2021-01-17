@@ -7,9 +7,13 @@
 #
 #   Parameters in `.envrc.ini` are:
 #
+#   <center>
+#
 #   | Name       | Description                                                    |
 #   | :--------- | :------------------------------------------------------------- |
 #   | `new`      | Path of the folder that must exists relative to `DIRENV_ROOT`  |
+#
+#   </center>
 #
 #   ## Parameters
 #
