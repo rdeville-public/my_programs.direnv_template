@@ -415,6 +415,7 @@ generate_method_docs()
   parse_arguments_doc
   parse_output_doc
   parse_returns_doc
+  echo "${quote_indent}"
 }
 
 generate_doc()
