@@ -189,14 +189,12 @@ build_dev:
   <<: *job_build_dev
   script:
     -  mkdocs build -f mkdocs.local.yml
-    -  mkdocs build -f mkdocs.yml
 
 build_prod:
   <<: *stage_build
   <<: *job_build_prod
   script:
     -  mkdocs build -f mkdocs.local.yml
-    -  mkdocs build -f mkdocs.yml
 
 # Jobs in deploy stage
 # -----------------------------------------------------------------------------
