@@ -9,10 +9,14 @@
 #
 #   Parameters in `.envrc.ini` are:
 #
+#   <center>
+#
 #   | Name                   | Description                                                                                        |
 #   | :--------------------- | :------------------------------------------------------------------------------------------------- |
 #   | `DIRENV_DEBUG_LEVEL`   | Select the level of verbosity                                                                      |
 #   | `source_up`            | If set to `true` (default: `false`), load parent directory environment when loaded using `direnv`  |
+#
+#   </center>
 #
 #   ## Parameters
 #

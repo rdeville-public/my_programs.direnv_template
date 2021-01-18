@@ -1,0 +1,213 @@
+---
+# GLOBAL CONFIGURATION
+# =============================================================================
+# Base image to use
+image: docker:latest
+
+# Stages jobs will pass through
+stages:
+  - test
+  - build
+  - deploy
+
+# Global variables shared for all jobs
+variables:
+  PIP_CACHE_DIR: "${CI_PROJECT_DIR}/.cache/pip/"
+
+# YAML Anchors
+# =============================================================================
+# https://docs.gitlab.com/ee/ci/yaml/#yaml-anchors-for-before_script-and-after_script
+
+# Images anchors
+# -----------------------------------------------------------------------------
+# Basic docker image -> docker:latest image
+.image_docker: &image_docker
+  image: docker:latest
+
+# Before scripts anchors
+# -----------------------------------------------------------------------------
+.before_script_python_dependencies: &before_script_python_dependencies
+  before_script:
+    # Add python dependencies
+    - apk update
+    # Install base package
+    - apk add --no-cache --update-cache
+        build-base
+        python3-dev
+        py3-pip
+        py3-virtualenv
+        bash
+        git
+    # Create virtual environment
+    - virtualenv .venv
+    # Activate virtual environment
+    - source .venv/bin/activate
+    # Install docs requirements
+    - pip3 install -r requirements.docs.txt
+    # Install development requirements
+    - pip3 install -r requirements.dev.txt
+    # Install production requirements
+    - pip3 install -r requirements.prod.txt
+
+.before_script_prepare_deployment: &before_script_prepare_deployment
+  before_script:
+    # Add curl dependencies
+    - apk update
+    - apk add --no-cache --update-cache curl
+
+# Only anchors
+# -----------------------------------------------------------------------------
+# Specify on which branch CI should be done
+# Jobs under only_dev anchor will be run if branch name are compliant with git
+# flow branch name convention.
+.only_dev: &only_dev
+  only:
+    refs:
+      - /release-*/
+      - /feature-*/
+      - /hotfix-*/
+      - /bugfix-*/
+      - develop
+      - merge_requests
+.only_dev: &only_trigger_dev
+  only:
+    refs:
+      - develop
+.only_prod: &only_prod
+  only:
+    refs:
+      - master
+
+# Tag anchors
+# -----------------------------------------------------------------------------
+# Run jobs in regular docker
+.tag_docker: &tag_docker
+  tags:
+    - docker
+
+# Stages anchors
+# -----------------------------------------------------------------------------
+# Setup stage on which jobs will be run
+# This can be seen as overbloated, but the advantage is that if we rename a
+# stage, we will just need to rename it at the start of this CI and here, not
+# for every jobs that use this stage.
+.stage_test: &stage_test
+  stage: test
+
+.stage_build: &stage_build
+  stage: build
+
+.stage_deploy: &stage_deploy
+  stage: deploy
+
+# Cache anchors
+# -----------------------------------------------------------------------------
+# Setup a global cache to avoid having to reinstall pip and package dependencies
+# every time
+# **REMARK** For this to work, runners must be on the same server and docker
+# executor must mount /cache
+.cache_python: &cache_python
+  cache:
+    # Cache dependencies shared across all branches but separated by jobs
+    # https://docs.gitlab.com/ee/ci/caching/#sharing-caches-across-different-branches
+    key: "${CI_JOB_NAME}"
+    # Let us cache python dependencies
+    # https://docs.gitlab.com/ee/ci/caching/#caching-python-dependencies
+    paths:
+      - .cache/pip
+      - .venv/
+
+# Jobs anchors
+# -----------------------------------------------------------------------------
+# Setup jobs which will mainly use the same configuration
+# Basic job anchors
+.job_test: &job_test
+  <<: *before_script_python_dependencies
+  <<: *tag_docker
+  <<: *image_docker
+  <<: *cache_python
+
+.job_build: &job_build
+  <<: *before_script_python_dependencies
+  <<: *tag_docker
+  <<: *image_docker
+  <<: *cache_python
+
+.job_deploy: &job_deploy
+  <<: *before_script_prepare_deployment
+  <<: *tag_docker
+  <<: *image_docker
+  <<: *cache_python
+
+# Dev jobs done on all branches except master
+.job_test_dev: &job_test_dev
+  <<: *job_test
+  <<: *only_dev
+
+.job_build_dev: &job_build_dev
+  <<: *job_build
+  <<: *only_dev
+
+.job_deploy_dev: &job_deploy_dev
+  <<: *job_deploy
+  <<: *only_trigger_dev
+
+# Prod jobs done only on master
+.job_test_prod: &job_test_prod
+  <<: *job_test
+  <<: *only_prod
+
+.job_build_prod: &job_build_prod
+  <<: *job_build
+  <<: *only_prod
+
+.job_deploy_prod: &job_deploy_prod
+  <<: *job_deploy
+  <<: *only_prod
+
+# =============================================================================
+# CI JOBS
+# =============================================================================
+# Jobs in test stage
+# -----------------------------------------------------------------------------
+test_dev:
+  <<: *stage_test
+  <<: *job_test_dev
+  script:
+    - tox
+
+test_prod:
+  <<: *stage_test
+  <<: *job_test_prod
+  script:
+    -  tox
+
+# Jobs in build stage
+# -----------------------------------------------------------------------------
+build_dev:
+  <<: *stage_build
+  <<: *job_build_dev
+  script:
+    -  mkdocs build -f mkdocs.local.yml
+
+build_prod:
+  <<: *stage_build
+  <<: *job_build_prod
+  script:
+    -  mkdocs build -f mkdocs.local.yml
+
+# Jobs in deploy stage
+# -----------------------------------------------------------------------------
+trigger_main_doc_dev:
+  <<: *stage_deploy
+  <<: *job_deploy_dev
+  script:
+    - echo "Triggering rebuild of main documentation on develop branch"
+    - curl -X POST -F token=${TRIGGER_TOKEN} -F ref=develop https://framagit.org/api/v4/projects/${TRIGGER_PROJECT_ID}/trigger/pipeline
+
+trigger_main_doc_master:
+  <<: *stage_deploy
+  <<: *job_deploy_prod
+  script:
+    - echo "Triggering rebuild of main documentation on master branch"
+    - curl -X POST -F token=${TRIGGER_TOKEN} -F ref=master https://framagit.org/api/v4/projects/${TRIGGER_PROJECT_ID}/trigger/pipeline

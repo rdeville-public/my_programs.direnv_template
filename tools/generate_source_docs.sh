@@ -415,6 +415,7 @@ generate_method_docs()
   parse_arguments_doc
   parse_output_doc
   parse_returns_doc
+  echo "${quote_indent}"
 }
 
 generate_doc()
@@ -494,8 +495,11 @@ generate_doc()
     if [[ "${nb_indent}" -ne 0 ]]
     then
       quote_indent="$(printf "%${nb_indent}s" ">")"
+      method_content=$(sed -n -e "/${i_method_name}/,/# \"\"\"$/"p "${i_node}")
+    else
+      quote_indent=""
+      method_content=$(sed -n -e "/^${i_method_name}/,/# \"\"\"$/"p "${i_node}")
     fi
-    method_content=$(sed -n -e "/${i_method_name}/,/# \"\"\"$/"p "${i_node}")
     full_doc+="$(generate_method_docs "${method_content}")"
   done <<<"$(grep -E '[a-zA-Z_]\(\)' "${i_node}")"
 

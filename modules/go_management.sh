@@ -8,24 +8,27 @@
 #   `GOPATH` acessible from the command line by creating a symlinks to
 #   `.direnv/bin/` for each of them.
 #
-#   TODO @rdeville: Write go module management
+#   <!-- TODO @rdeville: Write go module management -->
 #
 #   Parameters in `.envrc.ini` are:
 #
-#   TODO @rdeville: Write go module management in below array
+#   <!-- TODO @rdeville: Write go module management in below array -->
+#
+#   <center>
 #
 #   | Name     | Description                                                               |
 #   | :------- | :------------------------------------------------------------------------ |
 #   | `GOPATH` | (optional) Absolute path to the go directory, default is `.direnv/tmp/go` |
 #
+#   </center>
 #
 #   ## Parameters
 #
 #   ### `GOPATH`
 #
 #   Absolute path where the go directory will be created. Default is set to
-#   `${DIRENV_ROOT}/.direnv/tmp/go. User can use path contraction like `~`,
-#   `${HOME}` or ``${DIRENV_ROOT}``
+#   `${DIRENV_ROOT}/.direnv/tmp/go`. User can use path contraction like `~`,
+#   `${HOME}` or `${DIRENV_ROOT}`
 #
 #   ## `.envrc.ini` example
 #

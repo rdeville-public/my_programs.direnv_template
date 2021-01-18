@@ -12,18 +12,22 @@
 #
 #   Parameters in `.envrc.ini` are:
 #
+#   <center>
+#
 #   | Name               | Description                                                                                             |
 #   | :----------------- | :------------------------------------------------------------------------------------------------------ |
 #   | `KEEPASS_DB`       | Absolute path to a keepassxc database                                                                   |
 #   | `KEEPASS_KEYFILE`  | Absolute path to a file to unlock keepassxc database                                                    |
 #   | `KEEPASS_NAME`     | (optional) Explicit name for the database, like `perso`, `pro`, etc., which can be used in your prompt  |
 #
+#   </center>
+#
 #   ## Parameters
 #
 #   ### `KEEPASS_DB`
 #
 #   Absolute path to a keepassxc database, you can use `~`, `${HOME}` or even
-#   `${DIRENV_ROOT} to define path relatively. The database cannot be unlocked
+#   `${DIRENV_ROOT}` to define path relatively. The database cannot be unlocked
 #   with password when using script `keepass.sh`, be sure to configure it to be
 #   unlocked using file.
 #

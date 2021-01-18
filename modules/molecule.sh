@@ -7,9 +7,13 @@
 #
 #   Parameters in `.envrc.ini` are:
 #
+#   <center>
+#
 #   | Name               | Description                                        |
 #   | :----------------- | :------------------------------------------------- |
 #   | `MOLECULE_NO_LOG`  | Boolean for molecule to show log (default `false`) |
+#
+#   </center>
 #
 #   ## Parameters
 #

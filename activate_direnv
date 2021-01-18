@@ -123,6 +123,7 @@ activate_direnv()
     # """Unset modules from list of already loaded modules
     #
     # The process to unset modules is compose of two part:
+    #
     #   - Unset methods defined in the module
     #   - Unset associative array related to this module
     #
@@ -168,6 +169,7 @@ activate_direnv()
     # """Unset all methods and variables set to load directory environment
     #
     # The process to unset all methods and variables is composed of two part:
+    #
     #   - Unset methods and variables defined by modules
     #   - Unset methods defined by library scripts
     #

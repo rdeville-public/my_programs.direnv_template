@@ -17,9 +17,6 @@ mkdocs-minify-plugin
 # Plugin for adding monorepository support in Mkdocs.
 # https://pypi.org/project/mkdocs-monorepo-plugin/
 mkdocs-monorepo-plugin
-# A MkDocs plugin for including mermaid graphs in markdown sources
-# https://pypi.org/project/mkdocs-mermaid2-plugin/
-mkdocs-mermaid2-plugin
 # Mkdocs plugin that enables displaying the localized date of the last git
 # modification of a markdown file.
 # https://pypi.org/project/mkdocs-git-revision-date-localized-plugin/
@@ -36,6 +33,9 @@ markdown-include
 # Unleash the power of MkDocs with macros and variables
 # https://pypi.org/project/mkdocs-macros-plugin/
 mkdocs-macros-plugin
+# A mkdocs plugin that lets you exclude files or trees.
+# https://github.com/apenwarr/mkdocs-exclude
+mkdocs-exclude
 # Markdown extension to wrap images in a lightbox.
 # https://github.com/g-provost/lightgallery-markdown
 git+https://github.com/g-provost/lightgallery-markdown

@@ -60,7 +60,7 @@ compute_sha1()
     file_from="${DIRENV_ROOT}/${i_node}"
     file_sha1="${DIRENV_SHA1}/${i_node}.sha1"
 
-    if [[ -f "${file_from}" ]]
+    if [[ -f "${file_from}" ]] && ! [[ "${file_from}" =~ __pycache__ ]]
     then
       direnv_log "INFO" "Computing sha1 of **${i_node}**."
       sha1sum "${file_from}" | cut -d " " -f 1 > "${file_sha1}"
