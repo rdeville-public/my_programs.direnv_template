@@ -1,0 +1,78 @@
+---
+# MKDocs configuration
+# https://www.mkdocs.org/
+# =============================================================================
+# Configuraiton file describing the documentation using mkdocs.
+
+# IMPORTANT: This file is not to be used to render documentation locally.
+# This file is include for docs.romaindeville.fr main documentation repos.
+# Use `mkdocs serve -f mkdocs.local.yml` for the local rendering
+
+# Website Information
+# ---------------------------------------------------------------------------
+site_name: my_programs/direnv_template
+
+
+# Website architecture
+# ---------------------------------------------------------------------------
+nav:
+  - Home: index.md
+  - Setup Directory Environment: setup_directory_environment.md
+  - Modules:
+    - modules/index.md
+    - Ansible: modules/ansible.md
+    - Direnv Management: modules/direnv_management.md
+    - Folders: modules/folders.md
+    - Go: modules/go.md
+    - Keepass: modules/keepass.md
+    - Kubernetes: modules/kubernetes.md
+    - Molecule: modules/molecule.md
+    - Openstack: modules/openstack.md
+    - Packer: modules/packer.md
+    - Path Management: modules/path_management.md
+    - Python Management: modules/python_management.md
+    - Tmux management: modules/tmux_management.md
+    - Vimrc local: modules/vimrc_local.md
+  - Tutorials:
+    - tutorials/index.md
+    - Add direnv module: tutorials/add_direnv_module.md
+  - Source Code References:
+    - lib:
+      - direnv_log.sh: references/lib/direnv_log.md
+      - parse_ini_file: references/lib/parse_ini_file.md
+    - modules:
+      - ansible.sh: references/modules/ansible.md
+      - direnv_management.sh: references/modules/direnv_management.md
+      - folders.sh: references/modules/folders.md
+      - go.sh: references/modules/go.md
+      - keepass.sh: references/modules/keepass.md
+      - kubernetes.sh: references/modules/kubernetes.md
+      - molecule.sh: references/modules/molecule.md
+      - openstack.sh: references/modules/openstack.md
+      - packer.sh: references/modules/packer.md
+      - path_management.sh: references/modules/path_management.md
+      - python_management.sh: references/modules/python_management.md
+      - tmux_management.sh: references/modules/tmux_management.md
+      - vimrc_local.sh: references/modules/vimrc_local.md
+    - src:
+      - keepass.sh: references/src/keepass.md
+      - select_ansible.sh: references/src/select_ansible.md
+      - select_openstack.sh: references/src/select_openstack.md
+      - upgrade_direnv.sh: references/src/upgrade_direnv.md
+      - clone_ansible_roles.py: references/src/clone_ansible_roles.md
+    - tools:
+      - compute_sha1.sh: references/tools/compute_sha1.md
+      - generate_envrc_ini_template.sh: references/tools/generate_envrc_ini_template.md
+      - generate_module_docs.sh: references/tools/generate_module_docs.md
+      - generate_source_docs.sh: references/tools/generate_source_docs.md
+    - activate_direnv: references/activate_direnv.md
+    - deactivate_direnv: references/deactivate_direnv.md
+    - .envrc: references/envrc.md
+  - About:
+    - Release Notes: about/release_notes.md
+    - License: about/license.md
+
+# *****************************************************************************
+# EDITOR CONFIG
+# vim: ft=yaml: ts=2: sw=2: sts=2
+# *****************************************************************************

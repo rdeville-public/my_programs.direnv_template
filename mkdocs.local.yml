@@ -1,0 +1,275 @@
+---
+# MKDocs configuration
+# https://www.mkdocs.org/
+# =============================================================================
+# Configuraiton file describing the documentation using mkdocs.
+
+# Website Information
+# ---------------------------------------------------------------------------
+site_name: Direnv Template
+site_description: >-
+  Template to easily setup and managed direnv folders to have homogenous direnv configuration.
+site_url: https://docs.romaindeville.fr/my_programs/direnv_template
+copyright: Copyright &copy; 2020 - Romain Deville
+docs_dir: docs
+
+# Repository Information
+# ---------------------------------------------------------------------------
+repo_name: Framagit
+repo_url: https://framagit.org/rdeville.public/my_programs/direnv_template
+edit_uri: ""
+# This setting controls the style used for linking to pages within the
+# documentation.
+use_directory_urls: false
+
+# Theme Configuration
+# ---------------------------------------------------------------------------
+theme:
+  # Using mkdocs-material theme
+  # https://squidfunk.github.io/mkdocs-material/
+  name: material
+  # Overriding parent theme configuration
+  custom_dir: docs/theme
+  # Determines whether the search plugin expects the theme to provide a
+  # dedicated search page via a template located at search/search.html.
+  include_search_page: false
+  # Determines whether the search plugin should only generate a search
+  # index or a complete search solution.
+  search_index_only: true
+  # Language site
+  language: en
+  # Optional features like tabs and instant loading are now implemented
+  # as flags and can be enabled by listing them in mkdocs.yml under
+  # theme.features:
+  features:
+    #- navigation.tabs
+    - navigation.instant
+  # Setting colors palette (these are defined in docs/theme/css/colors.css)
+  palette:
+    scheme: slate
+    primary: drac-yellow
+    accent: drac-yellow
+  # Font configuration for the website (FurCode are provided in
+  # docs/theme/fonts)
+  font:
+    text: FuraCode Nerd Font
+    code: FuraCode Nerd Font
+  # Path to logo and icons to use for the website
+  logo: "assets/img/direnv_template_logo.png"
+  icon:
+    repo: fontawesome/brands/gitlab
+  favicon: "assets/img/direnv_template_logo.png"
+
+# External CSS
+# ---------------------------------------------------------------------------
+extra_css:
+  # Define cutom fonts
+  - theme/css/fonts.css
+  # Define cutom css when using attr_list
+  # https://python-markdown.github.io/extensions/attr_list/
+  - theme/css/attr_list.css
+  # Define custom color palette
+  # From: https://github.com/facelessuser/pymdown-extensions
+  - theme/css/colors.css
+  # Define custom mkdocstring css
+  # From: https://github.com/pawamoy/mkdocstrings/blob/master/docs/css/mkdocstrings.css
+  - theme/css/mkdocstring.css
+
+# Plugins
+# ---------------------------------------------------------------------------
+plugins:
+  - search:
+    # https://spotify.github.io/mkdocs-monorepo-plugin/
+    # This plugin enables you to build multiple sets of documentation in a
+    # single Mkdocs.
+    #- monorepo:
+    # https://github.com/timvink/mkdocs-git-revision-date-localized-plugin
+    # MkDocs plugin that enables displaying the date of the last git
+    # modification of a page.
+  - git-revision-date-localized:
+      locale: en
+      fallback_to_build_date: true
+    # https://pawamoy.github.io/mkdocstrings/
+    # Automatic documentation from sources, for MkDocs.
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          rendering:
+            show_source: true
+            show_if_no_docstring: true
+          setup_commands:
+            - import sys
+            - sys.path.append("./src/")
+    # https://github.com/fralau/mkdocs_macros_plugin
+    # Unleash the power of MkDocs with variables and macros
+  - macros:
+      include_dir: ./
+      include_yaml:
+        - _data/vars.yaml
+    # https://github.com/oprypin/mkdocs-section-index
+    # MkDocs plugin to allow clickable sections that lead to an index page
+  - section-index:
+    # https://github.com/apenwarr/mkdocs-exclude
+    # A mkdocs plugin that lets you exclude files or trees.
+  - exclude:
+      glob:
+        - theme/**.md
+
+# Extensions
+# ---------------------------------------------------------------------------
+markdown_extensions:
+  - markdown_include.include:
+      base_path: ./
+  # Python Markdown Extensions
+  # https://python-markdown.github.io/extensions/
+  - markdown.extensions.toc:
+      slugify: !!python/name:pymdownx.slugs.uslugify
+      permalink: ""
+  - markdown.extensions.admonition:
+  - markdown.extensions.smarty:
+      smart_quotes: false
+  - markdown.extensions.attr_list:
+  - markdown.extensions.def_list:
+  - markdown.extensions.tables:
+  - markdown.extensions.abbr:
+  - markdown.extensions.footnotes:
+  - markdown.extensions.meta:
+  - markdown.extensions.md_in_html:
+  # Pymdown Extensions
+  # https://facelessuser.github.io/pymdown-extensions/extensions/arithmatex/
+  - pymdownx.betterem:
+  - pymdownx.tabbed:
+  - pymdownx.superfences:
+      preserve_tabs: true
+      # Make exceptions to highlighting code of following classes:
+      custom_fences:
+        - name: math
+          class: arithmatex
+          format: !!python/name:pymdownx.arithmatex.fence_mathjax_format
+  - pymdownx.highlight:
+      extend_pygments_lang:
+        - name: php-inline
+          lang: php
+          options:
+            startinline: true
+        - name: pycon3
+          lang: pycon
+          options:
+            python3: true
+      linenums_style: pymdownx-inline
+  - pymdownx.inlinehilite:
+      custom_inline:
+        - name: math
+          class: arithmatex
+          format: !!python/name:pymdownx.arithmatex.inline_mathjax_format
+  - pymdownx.tilde:
+  - pymdownx.caret:
+  - pymdownx.critic:
+  - pymdownx.smartsymbols:
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+      options:
+        custom_icons:
+          - .icons
+  - pymdownx.escapeall:
+      hardbreak: True
+      nbsp: True
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.progressbar:
+  - pymdownx.arithmatex:
+  - pymdownx.mark:
+  - pymdownx.striphtml:
+  - pymdownx.keys:
+      separator: "\uff0b"
+  - pymdownx.details:
+  # Locally installed in docs/theme/plugins/ from original repo
+  # https://github.com/g-provost/lightgallery-markdown
+  - lightgallery:
+
+# Extra Data Information & Customization
+# ---------------------------------------------------------------------------
+# Dictionnary storing variables to be used as "Jinja2" variables within
+# markdown files
+extra:
+  social:
+    - icon: fontawesome/solid/globe
+      link: https://romaindeville.fr
+    - icon: fontawesome/solid/paper-plane
+      link: mailto:contact@romaindeville.fr
+    - icon: fontawesome/solid/book-reader
+      link: https://docs.romaindeville.fr
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/romaindeville
+    - icon: fontawesome/brands/docker
+      link: https://hub.docker.com/u/rdeville
+    - icon: fontawesome/brands/github
+      link: https://github.com/rdeville/
+    - icon: fontawesome/brands/gitlab
+      link: https://framagit.org/rdeville.public/
+
+# Website architecture
+# ---------------------------------------------------------------------------
+nav:
+  - Home: index.md
+  - Setup Directory Environment: setup_directory_environment.md
+  - Modules:
+    - modules/index.md
+    - Ansible: modules/ansible.md
+    - Direnv Management: modules/direnv_management.md
+    - Folders: modules/folders.md
+    - Go: modules/go.md
+    - Keepass: modules/keepass.md
+    - Kubernetes: modules/kubernetes.md
+    - Molecule: modules/molecule.md
+    - Openstack: modules/openstack.md
+    - Packer: modules/packer.md
+    - Path Management: modules/path_management.md
+    - Python Management: modules/python_management.md
+    - Tmux management: modules/tmux_management.md
+    - Vimrc local: modules/vimrc_local.md
+  - Tutorials:
+    - tutorials/index.md
+    - Add direnv module: tutorials/add_direnv_module.md
+  - Source Code References:
+    - lib:
+      - direnv_log.sh: references/lib/direnv_log.md
+      - parse_ini_file: references/lib/parse_ini_file.md
+    - modules:
+      - ansible.sh: references/modules/ansible.md
+      - direnv_management.sh: references/modules/direnv_management.md
+      - folders.sh: references/modules/folders.md
+      - go.sh: references/modules/go.md
+      - keepass.sh: references/modules/keepass.md
+      - kubernetes.sh: references/modules/kubernetes.md
+      - molecule.sh: references/modules/molecule.md
+      - openstack.sh: references/modules/openstack.md
+      - packer.sh: references/modules/packer.md
+      - path_management.sh: references/modules/path_management.md
+      - python_management.sh: references/modules/python_management.md
+      - tmux_management.sh: references/modules/tmux_management.md
+      - vimrc_local.sh: references/modules/vimrc_local.md
+    - src:
+      - keepass.sh: references/src/keepass.md
+      - select_ansible.sh: references/src/select_ansible.md
+      - select_openstack.sh: references/src/select_openstack.md
+      - upgrade_direnv.sh: references/src/upgrade_direnv.md
+      - clone_ansible_roles.py: references/src/clone_ansible_roles.md
+    - tools:
+      - compute_sha1.sh: references/tools/compute_sha1.md
+      - generate_envrc_ini_template.sh: references/tools/generate_envrc_ini_template.md
+      - generate_module_docs.sh: references/tools/generate_module_docs.md
+      - generate_source_docs.sh: references/tools/generate_source_docs.md
+    - activate_direnv: references/activate_direnv.md
+    - deactivate_direnv: references/deactivate_direnv.md
+    - .envrc: references/envrc.md
+  - About:
+    - Release Notes: about/release_notes.md
+    - License: about/license.md
+
+# *****************************************************************************
+# EDITOR CONFIG
+# vim: ft=yaml: ts=2: sw=2: sts=2
+# *****************************************************************************
