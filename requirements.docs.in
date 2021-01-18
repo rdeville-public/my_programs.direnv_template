@@ -33,6 +33,9 @@ markdown-include
 # Unleash the power of MkDocs with macros and variables
 # https://pypi.org/project/mkdocs-macros-plugin/
 mkdocs-macros-plugin
+# A mkdocs plugin that lets you exclude files or trees.
+# https://github.com/apenwarr/mkdocs-exclude
+mkdocs-exclude
 # Markdown extension to wrap images in a lightbox.
 # https://github.com/g-provost/lightgallery-markdown
 git+https://github.com/g-provost/lightgallery-markdown
