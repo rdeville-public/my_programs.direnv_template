@@ -285,7 +285,7 @@ python_management()
       direnv_log "INFO" "Generation of the python ${type_requirements} requirements with pinned version."
       pip-compile "${unpin_requirements}" >> "${DIRENV_LOG_FOLDER}/module.python_management.log" 2>&1
       # Remove ${DIRENV_ROOT} from pinned version of the requirements
-      sed -i -e "s/${DIRENV_ROOT//\//\\\/}\///g" ${pinned_requirements}
+      sed -i -e "s/${DIRENV_ROOT//\//\\\/}\///g" "${pinned_requirements}"
     fi
   }
 
