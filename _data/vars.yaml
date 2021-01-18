@@ -1,0 +1,16 @@
+git_platform:
+  name: " Framagit"
+  domain: "framagit.org"
+  url: "https://framagit.org/"
+  user_profile: "rdeville/"
+  main_namespace: "rdeville.public/"
+  repo_name: "Direnv Template"
+  repo_path_url: "my_programs/direnv_template"
+maintainer:
+  name: "Romain Deville"
+  mail: "contact@romaindeville.fr"
+main_doc:
+  name: "docs.romaindeville.fr"
+  repo_url: "https://framagit.org/rdeville.public/docs.romaindeville.fr/"
+  online_url: "https://docs.romaindeville.fr/"
+docs_url: "https://docs.romaindeville.fr/my_programs/direnv_template"
