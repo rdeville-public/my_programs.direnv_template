@@ -23,7 +23,7 @@ nav:
     - Ansible: modules/ansible.md
     - Direnv Management: modules/direnv_management.md
     - Folders: modules/folders.md
-    - Go: modules/go.md
+    - Go Management: modules/go_management.md
     - Keepass: modules/keepass.md
     - Kubernetes: modules/kubernetes.md
     - Molecule: modules/molecule.md
@@ -44,7 +44,7 @@ nav:
       - ansible.sh: references/modules/ansible.md
       - direnv_management.sh: references/modules/direnv_management.md
       - folders.sh: references/modules/folders.md
-      - go.sh: references/modules/go.md
+      - go_management.sh: references/modules/go_management.md
       - keepass.sh: references/modules/keepass.md
       - kubernetes.sh: references/modules/kubernetes.md
       - molecule.sh: references/modules/molecule.md
