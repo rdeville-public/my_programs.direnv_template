@@ -48,6 +48,8 @@ generate_doc()
   local output_file
   local module_index="${DIRENV_ROOT}/docs/modules/index.md"
 
+  mkdir -p $(dirname ${module_index})
+
   cat <<EOM > "${module_index}"
 # Modules
 
