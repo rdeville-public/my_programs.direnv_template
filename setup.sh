@@ -30,6 +30,7 @@ CLONE_METHOD="https"
 UPGRADE="false"
 DIRENV_ROOT="${PWD}"
 DIRENV_TMP="${DIRENV_ROOT}/.direnv/tmp"
+DIRENV_DEBUG_LEVEL="INFO"
 DIRENV_CLONE_ROOT="${DIRENV_TMP}/direnv_template"
 TO_INSTALL=(
   ".envrc"
@@ -266,7 +267,7 @@ ${e_normal}"
         mkdir -p "${DIRENV_ROOT}/.direnv/${i_node}"
         for i_subnode in "${file_from}"/* "${file_from}"/.*
         do
-          if [[ ${i_subnode} =~ \.$ ]]
+          if ! [[ ${i_subnode} =~ \.$ ]]
           then
             # Remove everything before the last occurence of ${DIRENV_CLONE_ROOT}
             i_subnode=${i_subnode##*${DIRENV_CLONE_ROOT}\/}
