@@ -88,12 +88,6 @@ direnv_management()
   then
     export DIRENV_DEBUG_LEVEL="${direnv_management[DIRENV_DEBUG_LEVEL]}"
   fi
-
-  if [[ "${IS_DIRENV}" == "true" ]] \
-     && [[ "${direnv_management[source_up]}" == "true" ]]
-  then
-    source_up
-  fi
 }
 
 deactivate_direnv_management()
