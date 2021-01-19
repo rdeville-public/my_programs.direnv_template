@@ -240,6 +240,12 @@ activate_direnv()
     #
     # """
 
+    if ! [[ -d "${DIRENV_BIN_FOLDER}" ]]
+    then
+      direnv_log "INFO" "Creating folder **${DIRENV_BIN_FOLDER//${DIRENV_ROOT}}**."
+      mkdir -p "${DIRENV_BIN_FOLDER}"
+    fi
+
     if ! [[ -f "${DIRENV_BIN_FOLDER}/upgrade_direnv" ]]
     then
       direnv_log "INFO" "Installing direnv upgrade script"
