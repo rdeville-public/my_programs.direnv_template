@@ -1,5 +1,10 @@
 # Release notes
 
+## v1.0.1
+
+Hotfix on `setup.sh` which causes installation to failed and not printing any
+log output.
+
 ## v1.0.0
 
 First release of the project with:
