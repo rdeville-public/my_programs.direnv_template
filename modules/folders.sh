@@ -1,46 +1,93 @@
 #!/usr/bin/env bash
+# """Ensure specified folder exists, if not create them.
+#
+# DESCRIPTION:
+#   Ensure list of specified folders provided by the user exists. If not, then
+#   create these folders.
+#
+#   Parameters in `.envrc.ini` are:
+#
+#   <center>
+#
+#   | Name       | Description                                                    |
+#   | :--------- | :------------------------------------------------------------- |
+#   | `new`      | Path of the folder that must exists relative to `DIRENV_ROOT`  |
+#
+#   </center>
+#
+#   ## Parameters
+#
+#   ### `new`
+#
+#   Path, relative to `DIRENV_ROOT` that must exists. Can be used multiple time
+#   to specify multiple folders to create. If parent directory does not exists
+#   it will be created.
+#
+#   ## `.envrc.ini` example
+#
+#   Corresponding entry in `.envrc.ini.template` are:
+#
+#   ```ini
+#   # Folder module
+#   # ------------------------------------------------------------------------------
+#   # Ensure new folders exists
+#   [folders]
+#   # Specify folders which must exist, if not they will be created. Path
+#   # relative to `DIRENV_ROOT`.
+#   new=tmp/folder_1
+#   new=tmp/folder_2
+#   ```
+#
+# """
 
-# SHELLCHECK
-# ---------------------------------------------------------------------------
-# Globally disable some shellcheck errors, warnings or remarks.
-# shellcheck disable=SC1090,SC2155,SC2039,SC2001
-#   - SC1090: Can't follow non-constant source. Use a directive to specify location.
-#   - SC2155: Declare and assign separately to avoid masking return values.
-#   - SC2039: In POSIX sh, array references are undefined
-#   - SC2001: See if you can use ${variable//search/replace} instead
-
-
-# FOLDER CREATION
-# ------------------------------------------------------------------------------
-# Ensure that folders exist per OpenStack projects. If they do not exists,
-# create them and inform the user.
-# Setup ansible directories which need to exists
 folders()
 {
+  # """Ensure list of folder exists
+  #
+  # From every folders listed in `${folder[new]}` ensure folders exist. If not,
+  # they will be created with their parent directory relative to `DIRENV_ROOT`.
+  #
+  # Globals:
+  #   DIRENV_INI_SEP
+  #   DIRENV_ROOT
+  #   ZSH_VERSION
+  #
+  # Arguments:
+  #   None
+  #
+  # Output:
+  #   Log information when creating a folder
+  #
+  # Returns:
+  #   None
+  #
+  # """
+
   local directories=()
   local i_folder
-  local i_directory
-  local e_normal="\e[0m"     # normal (white fg & transparent bg)
-  local e_bold="\e[1m"       # bold
 
-  # shellcheck disable=SC21
-  #   - SC1090: Can't follow non-constant source. Use a directive to specify location.
-  if echo "${folders[new]}" | grep -q "${DIRENV_INI_SEP}"
+  # shellcheck disable=SC2154
+  #   - SC2154: var is refenced but not assigned
+  if [[ "${folders[new]}" =~ ${DIRENV_INI_SEP} ]]
   then
-    folders[new]=$( echo "${folders[new]}" | sed "s/${DIRENV_INI_SEP}/\n/g" )
-    for i_directory in ${folders[new]}
-    do
-      directories+=("${i_directory}")
-    done
+    # Split string `${folder[new]}` into an array.
+    # Handle zsh
+    if [[ -n "${ZSH_VERSION}" ]]
+    then
+      IFS="${DIRENV_INI_SEP}" read -r -A directories <<< "${folders[new]}"
+    else
+      IFS="${DIRENV_INI_SEP}" read -r -a directories <<< "${folders[new]}"
+    fi
   else
     directories+=("${folders[new]}")
   fi
+
   for i_folder in "${directories[@]}"
   do
     i_folder="${DIRENV_ROOT}/${i_folder}"
     if ! [[ -d "${i_folder}" ]]
     then
-      direnv_log "INFO" "Creation of folder ${e_bold}${i_folder//${DIRENV_ROOT}\//}${e_normal}."
+      direnv_log "INFO" "Creation of folder **${i_folder//${DIRENV_ROOT}\//}**."
       mkdir -p "${i_folder}"
     fi
   done
