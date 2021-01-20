@@ -1,5 +1,13 @@
 # Release notes
 
+## v1.0.4
+
+Write forgotten release note for v1.0.3.
+
+## v1.0.3
+
+Update build status link in README.md.
+
 ## v1.0.2
 
 Fix rendering issues when integrated in main documentation on
