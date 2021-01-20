@@ -17,7 +17,6 @@
 #   | Name           | Description                                           |
 #   | :------------- | :---------------------------------------------------- |
 #   | `session_name` | Name of the tmux session                              |
-#   | `command`      | Command to be executed when starting the tmux session |
 #
 #   </center>
 #
@@ -29,12 +28,6 @@
 #   command `tmux list-sessions`. If not set, the session name will be the directory
 #   name.
 #
-#   ### `command`
-#
-#   Command to be executed when starting the session, like `vim` to open vim or
-#   `task list projects:direnv_template` to print task from taskwarrior and
-#   bugwarrior with project `direnv_template, etc.`
-#
 #   ## `.envrc.ini` example
 #
 #   Corresponding entry in `.envrc.ini.template` are:
@@ -44,10 +37,8 @@
 #   # ------------------------------------------------------------------------------
 #   # Create and/or attach session which name is the directory folder
 #   [tmux_management]
-#   # Override default tmux session name
+#   # Override default (folder name) tmux session name
 #   session_name=direnv_template
-#   # Command to execute when starting the tmux session
-#   command=task list project:direnv_template
 #   ```
 #
 # """
@@ -79,21 +70,14 @@ tmux_management()
   #
   # """
 
-  local tmux_session=${tmux[session_name]:-$(basename "${DIRENV_ROOT}")}
-  local tmux_start_command=${tmux[command]:-""}
-
+  local tmux_session=${tmux_management[session_name]:-$(basename "${DIRENV_ROOT}")}
   # Replace `.` by `_` in tmux session name
   tmux_sesion=${tmux_session//\./_}
 
   # Check if tmux session already exists
   if ! tmux list-sessions &> /dev/null || ! tmux list-sessions | grep -q -E "^${tmux_session}"
   then
-    if [[ -n "${tmux_start_command}" ]]
-    then
-      tmux new-session -d -s "${tmux_session}" "${start_command}"
-    else
-      tmux new-session -d -s "${tmux_session}"
-    fi
+    tmux new-session -d -s "${tmux_session}"
   fi
 
   # Check if inside a tmux session

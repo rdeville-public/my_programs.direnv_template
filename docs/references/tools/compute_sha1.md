@@ -8,8 +8,6 @@ Recursively compute SHA1 sum of a list of files and folders
 
 ## Description
 
-THIS SCRIPT WILL ONLY WORK IF DIRECTORY ENVIRONMENT IS ACTIVATED !
-
 The script will compute SHA1 sum of every required files for directory
 environment and store these SHA1 into the corresponding file in `.sha1`
 folder with the same architecture.
