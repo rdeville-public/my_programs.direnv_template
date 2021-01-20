@@ -1,5 +1,9 @@
 # Release notes
 
+## v1.0.9
+
+Fix shellcheck warning on tmux_management
+
 ## v1.0.8
 
 Drop support of `command` parameter for the `tmux_management` module as it did
