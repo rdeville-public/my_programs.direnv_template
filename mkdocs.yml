@@ -12,11 +12,10 @@
 # ---------------------------------------------------------------------------
 site_name: my_programs/direnv_template
 
-
 # Website architecture
 # ---------------------------------------------------------------------------
 nav:
-  - Home: index.md
+  - Description: index.md
   - Setup Directory Environment: setup_directory_environment.md
   - Modules:
     - modules/index.md

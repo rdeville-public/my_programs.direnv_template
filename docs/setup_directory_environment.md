@@ -9,7 +9,8 @@ can be done with the following command:
 
 ```bash
 # First download setup script in a temporary folder
-curl -sSL {{ git_platform.url }}{{ git_platform.main_namespace }}my_programs/direnv_template/-/raw/master/setup.sh > /tmp/setup_direnv.sh
+curl -sSL {{ git_platform.url }}{{ git_platform.main_namespace }}my_programs/direnv_template/-/raw/master/setup.sh \
+  > /tmp/setup_direnv.sh
 # Then review this script with your favorite editor, `vim` here as example
 vim /tmp/setup_direnv.sh
 ```
@@ -59,8 +60,8 @@ directory if they do not exists.
 
       - Assuming you already have configured your directory environment (see
         section [Configure][configure]):
-        - [Activate your directory environment](#activate-directory-environment)
-        - Then [Upgrade directory environment source code](#upgrade-directory-environment-source-code).
+        - [Activate your directory environment](#activate)
+        - Then [Upgrade directory environment source code](#upgrade)
 
 
 Assuming you are in a `git` managed directory, you might want to version this
@@ -290,7 +291,7 @@ output when activating directory environment:
     [Deactivate][deactivate]).
 
     This may create conflict with other working environment. We strongly
-    recommend the automatic activation using [`direnv·`][direnv]. Indeed, with
+    recommend the automatic activation using [`direnv`][direnv]. Indeed, with
     [`direnv`][direnv], the directory environment will automatically be
     deactivated when leaving the working directory.
 
@@ -387,7 +388,7 @@ Normally, you might see three types of error:
     you modify a files, this probably means that project currently lack a
     feature. Do not hesitate to contribute and submit a merge request to let the
     community make profit of your enhancement. In order to do so, please refers
-    to the [Developers Guidelines][developers_guideline]
+    to the [Developers Guide][developers_guide]
 
   - SHA1 error of `.envrc.ini`
 
@@ -421,7 +422,7 @@ Normally, you might see three types of error:
 
 [add_direnv_module]: tutorials/add_direnv_module.md
 [error_activation]: #error-during-activation
-[developers_guideline]: {{ main_doc.online_url }}dev_guides/contributing.html
+[developers_guide]: {{ main_doc.online_url }}dev_guides/
 
 ## Upgrade
 
