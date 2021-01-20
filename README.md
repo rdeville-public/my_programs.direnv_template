@@ -148,4 +148,4 @@ You can now browse the full documentation by visiting
 [localhost]: https://localhost:8000
 
 <!-- Links used multiple times in multiple sections -->
-[direnv_template_online_doc]: https://docs.romaindeville.fr/my_dotfiles/direnv_template/index.html
+[direnv_template_online_doc]: https://docs.romaindeville.fr/my_programs/direnv_template/index.html
