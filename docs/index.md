@@ -1,25 +1,25 @@
 <center>
 
   <!-- Project Title -->
-  <a href="{{ git_platform.url }}{{ git_platform.main_namespace }}my_programs/direnv_template/">
-    <img src="./assets/img/direnv_template_logo.png" width="100px">
-    <h1>Direnv Template</h1>
+  <a href="{{ git_platform.url }}{{ direnv_template.repo_path_with_namespace }}">
+    <img src="{{ direnv_template.logo_path }}" width="100px">
+    <h1>{{ direnv_template.repo_name }}</h1>
   </a>
 
-  <!-- Project Badges -->
+
   [![License][license_badge]][license]
 
 --------------------------------------------------------------------------------
 
-Project to manage Directory Environment (either manually or using
-[`direnv`][direnv]) uniformly for all my projects.
+{{ config.site_description }}
 
 --------------------------------------------------------------------------------
 
   <b>
 IMPORTANT !
 
-Main repo is on [{{ git_platform.name }}][repo_url].<br>
+Main repo is on [{{ git_platform.name }} - {{
+direnv_template.repo_name_with_namespace }}][repo_url].<br>
 On other online git platforms, they are just mirrors of the main repo.<br>
 Any issues, pull/merge requests, etc., might not be considered on those other
 platforms.
@@ -28,9 +28,9 @@ platforms.
 
 --------------------------------------------------------------------------------
 
-[repo_url]: {{ git_platform.url }}{{ git_platform.main_namespace }}my_programs/direnv_template
-[license_badge]: https://img.shields.io/badge/Licence-GPLv3-informational?style=flat-square&logo=appveyor
-[license]: LICENSE
+[repo_url]: {{ git_platform.url }}{{ direnv_template.repo_path_with_namespace }}
+[license_badge]: https://img.shields.io/badge/Licence-MIT-informational?style=flat-square&logo=appveyor
+[license]: about/license.md
 
 ## Introduction
 
@@ -69,17 +69,17 @@ directory to:
   - Automate unsetting these variables and methods when leaving the directory.
 
 This can be achieve manually (by sourcing the right file) or by using
-[direnv][direnv]. [`direnv`][direnv] is an extension for your shell. It augments
-existing shells with a new feature that can load and unload environment
+[`direnv`][direnv]. [`direnv`][direnv] is an extension for your shell. It
+augments existing shells with a new feature that can load and unload environment
 variables depending on the current directory.
 
 In other terms, if a script `.envrc` is present in a folder and allowed for
 `direnv`, it will automatically be executed when entering the folder. When
 leaving the folder any exported variables will be automatically unloaded.
 
-### Why this repo since there is [direnv][direnv] ?
+### Why this repo since there is [`direnv`][direnv] ?
 
-Since some times now, I use [direnv][direnv] to manage my directory environment.
+Since some times now, I use [`direnv`][direnv] to manage my directory environment.
 Nevertheless, I was tired to always rewrite or copy/paste the same base scripts,
 then adapt them for each of my working directory. This repo is here to help
 managing the directory environment script in a homogeneous manner. Now, I do not
@@ -142,7 +142,7 @@ See [Setup directory environment][setup_directory_environment] for a more comple
 ## Contributing
 
 If you want to contribute to the project, you are welcome. Please refer first to
-the [Developers Guidelines][developers_guideline][^1].
+the [Developers Guidelines][developers_guideline].
 
 Once done, you can check following tutorials as starting point:
 
@@ -152,18 +152,15 @@ Once done, you can check following tutorials as starting point:
 
 !!! remark
     Last two tutorials are for the main repo hosting all of my project
-    documentations (i.e. [`{{ main_doc.name }}`][main_docs_repo]). All of my
+    documentations (i.e. [`{{ main_doc.repo_name }}`][main_docs_repo]). All of my
     project use the same documentation and CI process. So do not forget to adapt
     the URL of the repo.
-
-[^1]: If not available, please render main online documentation as described in
-  [{{ git_platform.name }}-{{ main_doc.name}}][main_docs_repo]
 
 [developers_guideline]: {{ main_doc.online_url }}dev_guides/contributing.html
 [add_direnv_module]: tutorials/add_direnv_module.md
 [update_documentation]: {{ main_doc.online_url }}dev_guides/tutorials/update_documentation.html
 [update_ci]: {{ main_doc.online_url}}dev_guides/tutorials/update_ci.html
-[main_docs_repo]: {{ main_doc.repo_url }}
+[main_docs_repo]: {{ git_platform.url }}{{ main_doc.repo_path_with_namespace }}
 
 <!-- URL used in mulitple section -->
 [direnv]: https://direnv.net

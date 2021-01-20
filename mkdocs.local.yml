@@ -8,19 +8,25 @@
 # ---------------------------------------------------------------------------
 site_name: Direnv Template
 site_description: >-
-  Template to easily setup and managed direnv folders to have homogenous direnv configuration.
+  Project to manage Directory Environment (either manually or using [direnv](https://direnv.net)) uniformly for all my projects.
 site_url: https://docs.romaindeville.fr/my_programs/direnv_template
 copyright: Copyright &copy; 2020 - Romain Deville
 docs_dir: docs
 
 # Repository Information
 # ---------------------------------------------------------------------------
-repo_name: Framagit
+repo_name: Direnv Template
 repo_url: https://framagit.org/rdeville.public/my_programs/direnv_template
 edit_uri: ""
 # This setting controls the style used for linking to pages within the
 # documentation.
 use_directory_urls: false
+
+### BEGIN MKDOCS TEMPLATE ###
+# ---------------------------------------------------------------------------
+# Below content is automatically managed with repo mkdocs_template.
+# Do not edit manually
+# ---------------------------------------------------------------------------
 
 # Theme Configuration
 # ---------------------------------------------------------------------------
@@ -75,46 +81,6 @@ extra_css:
   # From: https://github.com/pawamoy/mkdocstrings/blob/master/docs/css/mkdocstrings.css
   - theme/css/mkdocstring.css
 
-# Plugins
-# ---------------------------------------------------------------------------
-plugins:
-  - search:
-    # https://spotify.github.io/mkdocs-monorepo-plugin/
-    # This plugin enables you to build multiple sets of documentation in a
-    # single Mkdocs.
-    #- monorepo:
-    # https://github.com/timvink/mkdocs-git-revision-date-localized-plugin
-    # MkDocs plugin that enables displaying the date of the last git
-    # modification of a page.
-  - git-revision-date-localized:
-      locale: en
-      fallback_to_build_date: true
-    # https://pawamoy.github.io/mkdocstrings/
-    # Automatic documentation from sources, for MkDocs.
-  - mkdocstrings:
-      default_handler: python
-      handlers:
-        python:
-          rendering:
-            show_source: true
-            show_if_no_docstring: true
-          setup_commands:
-            - import sys
-            - sys.path.append("./src/")
-    # https://github.com/fralau/mkdocs_macros_plugin
-    # Unleash the power of MkDocs with variables and macros
-  - macros:
-      include_dir: ./
-      include_yaml:
-        - _data/vars.yaml
-    # https://github.com/oprypin/mkdocs-section-index
-    # MkDocs plugin to allow clickable sections that lead to an index page
-  - section-index:
-    # https://github.com/apenwarr/mkdocs-exclude
-    # A mkdocs plugin that lets you exclude files or trees.
-  - exclude:
-      glob:
-        - theme/**.md
 
 # Extensions
 # ---------------------------------------------------------------------------
@@ -205,10 +171,60 @@ extra:
       link: https://www.linkedin.com/in/romaindeville
     - icon: fontawesome/brands/docker
       link: https://hub.docker.com/u/rdeville
-    - icon: fontawesome/brands/github
-      link: https://github.com/rdeville/
     - icon: fontawesome/brands/gitlab
       link: https://framagit.org/rdeville.public/
+    - icon: fontawesome/brands/github
+      link: https://github.com/rdeville/
+
+# Plugins
+# ---------------------------------------------------------------------------
+plugins:
+  - search:
+    # https://github.com/timvink/mkdocs-git-revision-date-localized-plugin
+    # MkDocs plugin that enables displaying the date of the last git
+    # modification of a page.
+  - git-revision-date-localized:
+      locale: en
+      fallback_to_build_date: true
+    # https://github.com/oprypin/mkdocs-section-index
+    # MkDocs plugin to allow clickable sections that lead to an index page
+  - section-index:
+    # https://github.com/apenwarr/mkdocs-exclude
+    # A mkdocs plugin that lets you exclude files or trees.
+  - exclude:
+      glob:
+        - theme/**.md
+### END MKDOCS TEMPLATE ###
+### BEGIN MKDOCS USER TEMPLATE ###
+# ---------------------------------------------------------------------------
+# Below content is automatically generated with repo mkdocs_template.
+# This part is generated on the first setup from mkdocs_template.
+# You can update below parts to fit your need
+# ---------------------------------------------------------------------------
+    # https://spotify.github.io/mkdocs-monorepo-plugin/
+    # This plugin enables you to build multiple sets of documentation in a
+    # single Mkdocs.
+# - monorepo:
+    # https://pawamoy.github.io/mkdocstrings/
+    # Automatic documentation from sources, for MkDocs.
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          rendering:
+            show_source: true
+            show_if_no_docstring: true
+          setup_commands:
+            - import sys
+            - sys.path.append("./src/")
+    # https://github.com/fralau/mkdocs_macros_plugin
+    # Unleash the power of MkDocs with variables and macros
+  - macros:
+      include_dir: ./
+      include_yaml:
+        - _data/vars.yaml
+        - _data/direnv_template.yaml
+### END MKDOCS USER TEMPLATE ###
 
 # Website architecture
 # ---------------------------------------------------------------------------

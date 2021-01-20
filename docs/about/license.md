@@ -1,6 +1,10 @@
 # MIT License
 
-Copyright (c) 2020 [{{ maintainer.name }}](mailto:{{ maintainer.mail }})
+Copyright (c) 2020
+
+{% for i_maintainer in direnv_template.maintainers %}
+  - [{{ i_maintainer.name }}](mailto:{{ i_maintainer.mail }})
+{% endfor %}
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
