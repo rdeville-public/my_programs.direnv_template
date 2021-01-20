@@ -1,5 +1,10 @@
 # Release notes
 
+## v1.0.6
+
+Fix regex in `setup.sh` and `upgrade_direnv.sh` to not include `*/.` and `*/..`
+entry in `for` loop
+
 ## v1.0.5
 
 Update license badge on README.md
