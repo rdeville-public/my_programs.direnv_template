@@ -1,5 +1,13 @@
 # Release notes
 
+## v1.0.7
+
+Fix link to repo online documentation in the README.md which pointed to a wrong
+page.
+
+Fix tmux_management module which did not uses variable of the `.envrc.ini` file
+as described in the module docstring.
+
 ## v1.0.6
 
 Fix regex in `setup.sh` and `upgrade_direnv.sh` to not include `*/.` and `*/..`
