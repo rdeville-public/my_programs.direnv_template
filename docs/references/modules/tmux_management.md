@@ -19,7 +19,6 @@ Parameters in `.envrc.ini` are:
 | Name           | Description                                           |
 | :------------- | :---------------------------------------------------- |
 | `session_name` | Name of the tmux session                              |
-| `command`      | Command to be executed when starting the tmux session |
 
 </center>
 
@@ -31,12 +30,6 @@ Name of the tmux session, i.e. name that will be shown when using the
 command `tmux list-sessions`. If not set, the session name will be the directory
 name.
 
-### `command`
-
-Command to be executed when starting the session, like `vim` to open vim or
-`task list projects:direnv_template` to print task from taskwarrior and
-bugwarrior with project `direnv_template, etc.`
-
 ## `.envrc.ini` example
 
 Corresponding entry in `.envrc.ini.template` are:
@@ -46,10 +39,8 @@ Corresponding entry in `.envrc.ini.template` are:
 # ------------------------------------------------------------------------------
 # Create and/or attach session which name is the directory folder
 [tmux_management]
-# Override default tmux session name
+# Override default (folder name) tmux session name
 session_name=direnv_template
-# Command to execute when starting the tmux session
-command=task list project:direnv_template
 ```
 
 
