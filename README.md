@@ -30,7 +30,7 @@ platforms.
 --------------------------------------------------------------------------------
 
 [repo_url]: https://framagit.org/rdeville.public/my_programs/direnv_template
-[license_badge]: https://img.shields.io/badge/Licence-GPLv3-informational?style=flat-square&logo=appveyor
+[license_badge]: https://img.shields.io/badge/Licence-MIT-informational?style=flat-square&logo=appveyor
 [license]: LICENSE
 [build_status_badge]: https://framagit.org/rdeville.public/my_programs/direnv_template/badges/master/pipeline.svg?style=flat-square&logo=appveyor
 [build_status]: https://framagit.org/rdeville.public/my_programs/direnv_template/commits/master
