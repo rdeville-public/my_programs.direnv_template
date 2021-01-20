@@ -1,5 +1,14 @@
 # Release notes
 
+## v1.0.8
+
+Drop support of `command` parameter for the `tmux_management` module as it did
+not work as expected (i.e. command is not executed, it is just sent to the
+session).
+
+Update `tmux_management` module docstring and generate new documentation
+accordingly.
+
 ## v1.0.7
 
 Fix link to repo online documentation in the README.md which pointed to a wrong
