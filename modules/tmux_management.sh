@@ -72,7 +72,7 @@ tmux_management()
 
   local tmux_session=${tmux_management[session_name]:-$(basename "${DIRENV_ROOT}")}
   # Replace `.` by `_` in tmux session name
-  tmux_sesion=${tmux_session//\./_}
+  tmux_session=${tmux_session//\./_}
 
   # Check if tmux session already exists
   if ! tmux list-sessions &> /dev/null || ! tmux list-sessions | grep -q -E "^${tmux_session}"
