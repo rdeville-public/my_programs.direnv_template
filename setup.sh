@@ -267,7 +267,7 @@ ${e_normal}"
         mkdir -p "${DIRENV_ROOT}/.direnv/${i_node}"
         for i_subnode in "${file_from}"/* "${file_from}"/.*
         do
-          if ! [[ ${i_subnode} =~ \.$ ]]
+          if ! [[ "${i_subnode}" =~ ^${file_from}\/[\.]+$ ]]
           then
             # Remove everything before the last occurence of ${DIRENV_CLONE_ROOT}
             i_subnode=${i_subnode##*${DIRENV_CLONE_ROOT}\/}
