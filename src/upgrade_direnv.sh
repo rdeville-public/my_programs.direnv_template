@@ -209,7 +209,7 @@ upgrade_direnv()
     then
       for i_subnode in "${file_from}"/* "${file_from}"/.*
       do
-        if ! [[ "${i_subnode}" =~ ^(\.)+$ ]]
+        if ! [[ "${i_subnode}" =~ ^${file_from}\/[\.]+$ ]]
         then
           i_subnode="${i_subnode//${DIRENV_CLONE_ROOT}\/}"
           tmp_nodes+=("${i_subnode}")
