@@ -4,20 +4,24 @@ In this tutorial, we will see how to create a new module for the `direnv
 template` project. The present tutorial will give you main steps to create a
 module which are:
 
+  * [Setup the working environment](#setup-the-working-environment)
   * [Initialize the working branch](#initialize-the-working-branch)
-  * [Module documentation](#module-documentation)
-  * [Module activation](#module-activation)
-  * [Module deactivation](#module-deactivation)
-  * [Running tests](#running-tests)
+  * [Module main methods](#module-main-methods)
+    * [Module activation](#module-activation)
+    * [Module deactivation](#module-deactivation)
+  * [Write documentation](#write-documentation)
+    * [Main module documentation](#main-module-documentation)
+    * [Method documentation](#method-documentation)
   * [Render documentation](#render-documentation)
+  * [Running tests](#running-tests)
   * [Propose a merge request](#propose-a-merge-request)
 
 !!! important
 
-    This tutorial will assume you work on a fork of the repo
-    [{{ git_platform.name }}-{{ git_platform.repo_name }}][repo_url]. It is not
-    recommended to work directly on a `.direnv` folder from one of your
-    directory in which you setup directory environment.
+    This tutorial will assume you work on a fork of the repo [{{
+    git_platform.name }} - {{ direnv_template.repo_name_with_namespace
+    }}][repo_url]. It is not recommended to work directly on a `.direnv` folder
+    from one of your directory in which you setup directory environment.
 
 For all the following tutorial, we will assume the module name we want to add is
 `tuto_module`. Do not forget to change this for your module name.
@@ -570,13 +574,14 @@ Below are simple example for our `tuto_module`:
 
     You might want to add other script in other language for your module. For
     instance see script [`keepass.sh`][keepass_sh] or
-    [`clone_ansible_role.py`][clone_ansible_role.py]. Depending on the language
+    [`clone_ansible_role.py`][clone_ansible_role]. Depending on the language
     of the script, please follow corresponding [Guide Style][guide_style].
 
 [shellguide_function_comment]: https://docs.romaindeville.fr/dev_guides/style_guides/shellguide.html#function-comments
 [shellguide]: https://docs.romaindeville.fr/dev_guides/style_guides/shellguide.html
 [keepass_sh]: ../references/src/keepass.md
 [clone_ansible_role]: ../references/src/clone_ansible_roles.md
+[guide_style]: https://docs.romaindeville.fr/dev_guides/style_guides/
 
 ## Render documentation
 
@@ -629,7 +634,7 @@ it will run test that:
 ## Propose a merge request
 
 If you are happy with your module, you can propose a merge to the main repo
-[{{ git_platform.name }}-{{ git_platform.repo_name }}][repo_url]. Please refer
+[{{ git_platform.name }} - {{ direnv_template.repo_name_with_namespace }}][repo_url]. Please refer
 to [Developers Guidelines][developers_guidelines] as references to propose your
 merge request.
 
@@ -637,4 +642,4 @@ merge request.
 
 <!-- Link to URL used in multiple sections -->
 [python_management_module]: ../modules/python_management.md
-[repo_url]: {{ git_platform.url }}{{ git_platform.main_namespace }}{{ git_platform.repo_path_url }}
+[repo_url]: {{ git_platform.url }}{{ direnv_template.repo_path_with_namespace }}

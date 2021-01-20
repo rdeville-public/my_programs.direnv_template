@@ -5,8 +5,6 @@
 #   ./compute_sha1.sh
 #
 # DESCRIPTION:
-#   THIS SCRIPT WILL ONLY WORK IF DIRECTORY ENVIRONMENT IS ACTIVATED !
-#
 #   The script will compute SHA1 sum of every required files for directory
 #   environment and store these SHA1 into the corresponding file in `.sha1`
 #   folder with the same architecture.
@@ -24,6 +22,8 @@ NODES=(
   "templates"
 )
 
+DIRENV_ROOT="$(git rev-parse --show-toplevel)"
+DIRENV_DEBUG_LEVEL="INFO"
 # Output folder
 DIRENV_SHA1="${DIRENV_ROOT}/.sha1"
 
@@ -104,14 +104,6 @@ main()
   # Store coloring output prefix
   local e_normal="\e[0m"     # normal (white fg & transparent bg)
   local e_error="\e[0;31m"   # red fg
-
-  # Ensure directory environment is activated
-  if [[ -z "${DIRENV_ROOT}" ]]
-  then
-    # Not using direnv_log as directory environment is not loaded yet
-    echo -e "${e_error}[ERROR] Direnv must be activated to use this script.${e_normal}"
-    return 1
-  fi
 
   # Sourcing directory environment libraries scripts
   for i_lib in "${DIRENV_ROOT}"/lib/*.sh
