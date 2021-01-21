@@ -1,5 +1,13 @@
 # Release notes
 
+## v1.0.10
+
+Minor update:
+  - Update all python dependencies in requirements files
+  - Update repo description in `_data/direnv_template.yaml`
+  - Update docs/index.md to use this description
+  - Update forgotten SHA1 sum
+
 ## v1.0.9
 
 Fix shellcheck warning on tmux_management

@@ -1,6 +1,8 @@
 direnv_template:
   repo_name: "Direnv Template"
-  desc: Project to manage Directory Environment (either manually or using direnv) uniformly for all my projects.
+  desc: >-
+    Project to manage Directory Environment (either manually or using
+    [`direnv`](https://direnv.net)) uniformly for all my projects.
   repo_path_with_namespace: "rdeville.public/my_programs/direnv_template"
   repo_name_with_namespace: "My Programs / Direnv Template"
   logo_path: "assets/img/direnv_template_logo.png"
