@@ -1,11 +1,14 @@
 direnv_template:
-  repo_name: "Direnv Template"
+  name: "Direnv Template"
+  git_name_with_namespace: "My Programs / Direnv Template"
+  slug: "direnv_template"
+  git_slug_with_namespace: "rdeville.public/my_programs/direnv_template"
+  url_slug_with_namespace: "my_programs/direnv_template"
   desc: >-
     Project to manage Directory Environment (either manually or using
     [`direnv`](https://direnv.net)) uniformly for all my projects.
-  repo_path_with_namespace: "rdeville.public/my_programs/direnv_template"
-  repo_name_with_namespace: "My Programs / Direnv Template"
-  logo_path: "assets/img/direnv_template_logo.png"
+  src_path:
+    - "src"
   maintainers:
     - name: "Romain Deville"
       mail: "contact@romaindeville.fr"

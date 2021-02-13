@@ -536,7 +536,7 @@ tmux_management()
     tmuxinator start
   else
     # Check if tmux session already exists
-    if ! tmux list-sessions &> /dev/null || ! tmux list-sessions | grep -q -E "^${tmux_session}"
+    if ! tmux list-sessions &> /dev/null || ! tmux list-sessions | grep -q -E "^${tmux_session}:"
     then
       tmux new-session -d -s "${tmux_session}"
     fi
