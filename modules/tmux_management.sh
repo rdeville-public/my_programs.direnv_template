@@ -196,7 +196,7 @@ _tmux_management_generate_tmuxinator_config()
   #
   # """
 
-  cat <<EOM > ${DIRENV_ROOT}/.tmuxinator.yml
+  cat <<EOM > "${DIRENV_ROOT}/.tmuxinator.yml"
 # Main config
 # -----------------------------------------------------------------------------
 
@@ -278,6 +278,8 @@ _tmux_management_generate_tmuxinator_windows()
   local tmuxinator_templates_array
   local content=""
 
+  # shellcheck disable=SC2154
+  #   - SC2154: Variable is referenced but not assigned
   if [[ -n "${tmux_management[tmuxinator_templates]}" ]]
   then
     if [[ -n "${ZSH_VERSION}" ]]
@@ -301,7 +303,7 @@ _tmux_management_generate_tmuxinator_windows()
         error="true"
       elif [[ -f "${tmuxinator_templates_file}" ]]
       then
-        content+="$(cat ${tmuxinator_templates_file})\n"
+        content+="$(cat "${tmuxinator_templates_file}")\n"
       fi
     done
     if [[ -z "${content}" ]]
@@ -399,7 +401,7 @@ _tmux_management_generate_tmuxinator_multiline_keys()
       IFS="${DIRENV_INI_SEP}" read -r -a tmuxinator_templates_array \
         <<< "${tmux_management[tmuxinator_templates]}"
     fi
-    if [[ ${#tmuxinator_on_project_key[@]} -gt 1 ]] \
+    if [[ ${#tmuxinator_on_project_key_array[@]} -gt 1 ]] \
       || [[ ${#tmuxinator_templates_array[@]} -gt 0 ]]
     then
       for i_template in "${tmuxinator_templates_array[@]}"
@@ -412,7 +414,7 @@ _tmux_management_generate_tmuxinator_multiline_keys()
           error="true"
         elif [[ -f "${tmuxinator_templates_file}" ]]
         then
-          content+="$(cat ${tmuxinator_templates_file})"
+          content+="$(cat "${tmuxinator_templates_file}")"
         fi
       done
       for i_cmd in "${tmuxinator_on_project_key_array[@]}"
@@ -426,7 +428,7 @@ _tmux_management_generate_tmuxinator_multiline_keys()
         content="${key}: >-\n${content}"
       fi
     else
-      content="${key}: ${tmuxinator_on_project_restart[*]}"
+      content="${key}: ${tmuxinator_on_project_key_array[*]}"
     fi
     echo -e "${content}"
   else
@@ -464,7 +466,6 @@ _tmux_management_generate_tmuxinator()
   # """
 
   local tmuxinator_config
-  local uppercase_config
   declare -A tmuxinator_config
 
   if ! [[ -f "${DIRENV_ROOT}/.tmuxinator.yml" ]]
