@@ -1,9 +1,16 @@
+# Extra Data Information & Customization
+# ---------------------------------------------------------------------------
+# Dictionnary storing variables to be used ass "Jinja2" variables within
+# markdown files
 git_platform:
-  name: " Framagit"
-  domain: "framagit.org"
+  logo: " "
+  icon: fontawesome/brands/gitlab
+  name: "Framagit"
+  domain: "framagit.org/"
   url: "https://framagit.org/"
   user_profile: "rdeville/"
-main_doc:
-  repo_name: "docs.romaindeville.fr"
-  repo_path_with_namespace: "rdeville.public/docs.romaindeville.fr/"
-  online_url: "https://docs.romaindeville.fr/"
+
+copyright: "Romain Deville"
+
+site_base_url: "https://docs.romaindeville.fr"
+
