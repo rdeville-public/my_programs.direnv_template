@@ -1,5 +1,15 @@
 # Release notes
 
+## v1.1.0
+
+Upgrade documentation to use
+[mkdocs_template](https://framagit.org/rdeville.public/my_programs/mkdocs_template).
+
+Add [tmuxinator](https://github.com/tmuxinator/tmuxinator) support to the module
+`tmux_management`.
+
+Update/generate documentation accordingly.
+
 ## v1.0.10
 
 Minor update:
