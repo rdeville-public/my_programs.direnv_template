@@ -1,5 +1,9 @@
 # Release notes
 
+## v1.1.1
+
+Fix shellcheck warnings
+
 ## v1.1.0
 
 Upgrade documentation to use
