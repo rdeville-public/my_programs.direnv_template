@@ -1,5 +1,15 @@
 # Release notes
 
+## v1.1.0
+
+Upgrade documentation to use
+[mkdocs_template](https://framagit.org/rdeville.public/my_programs/mkdocs_template).
+
+Add [tmuxinator](https://github.com/tmuxinator/tmuxinator) support to the module
+`tmux_management`.
+
+Update/generate documentation accordingly.
+
 ## v1.0.10
 
 Minor update:
@@ -49,7 +59,7 @@ Update build status link in README.md.
 ## v1.0.2
 
 Fix rendering issues when integrated in main documentation on
-[`docs.romaindeville.fr/my_programs/direnv_template`][repo_doc_url].
+[`{{ site_base_url }}{{ direnv_template.url_slug_with_namespace }}`][repo_doc_url].
 
 Fix issues related to `source_up` which overlapped `DIRENV_ROOT`. Now
 `source_up` is done as soon as possible avoiding overlapping of direnv variable
@@ -58,7 +68,7 @@ of parent environment.
 Update `tools/compute_sha1.sh` to be run without activated directory environment
 and always printing logs.
 
-[repo_doc_url]: {{ main_doc.online_url }}{{ direnv_template.repo_path_with_namespace }}
+[repo_doc_url]: {{ site_base_url }}{{ direnv_template.url_slug_with_namespace }}
 
 ## v1.0.1
 

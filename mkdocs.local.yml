@@ -62,8 +62,9 @@ theme:
     code: FuraCode Nerd Font
   # Path to logo and icons to use for the website
   logo: "assets/img/direnv_template_logo.png"
-  icon:
-    repo: fontawesome/brands/gitlab
+  repo: "assets/img/direnv_template_logo.png"
+#  icon:
+#    repo: fontawesome/brands/gitlab
   favicon: "assets/img/direnv_template_logo.png"
 
 # External CSS
@@ -214,9 +215,6 @@ plugins:
           rendering:
             show_source: true
             show_if_no_docstring: true
-          setup_commands:
-            - import sys
-            - sys.path.append("./src/")
     # https://github.com/fralau/mkdocs_macros_plugin
     # Unleash the power of MkDocs with variables and macros
   - macros:

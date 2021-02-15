@@ -1,6 +1,7 @@
 # Project specific .gitignore
 # ==============================================================================
 
+.tmuxinator.y*l
 .loaded_modules
 .python_version.ok
 tmp

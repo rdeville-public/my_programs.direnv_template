@@ -2,8 +2,8 @@
 
   <!-- Project Title -->
   <a href="{{ git_platform.url }}{{ direnv_template.repo_path_with_namespace }}">
-    <img src="{{ direnv_template.logo_path }}" width="100px">
-    <h1>{{ direnv_template.repo_name }}</h1>
+    <img src="{{ direnv_template.logo }}" width="200px">
+    <h1>{{ direnv_template.name }}</h1>
   </a>
 
 
@@ -18,8 +18,7 @@
   <b>
 IMPORTANT !
 
-Main repo is on [{{ git_platform.name }} - {{
-direnv_template.repo_name_with_namespace }}][repo_url].<br>
+Main repo is on [{{ git_platform.name }} - {{ direnv_template.git_name_with_namespace }}][repo_url].<br>
 On other online git platforms, they are just mirrors of the main repo.<br>
 Any issues, pull/merge requests, etc., might not be considered on those other
 platforms.
@@ -28,7 +27,7 @@ platforms.
 
 --------------------------------------------------------------------------------
 
-[repo_url]: {{ git_platform.url }}{{ direnv_template.repo_path_with_namespace }}
+[repo_url]: {{ git_platform.url }}{{ direnv_template.git_slug_with_namespace }}
 [license_badge]: https://img.shields.io/badge/Licence-MIT-informational?style=flat-square&logo=appveyor
 [license]: about/license.md
 
@@ -94,7 +93,7 @@ environment for your current folder.
 First, install scripts setting up directory environment:
 
 ```bash
-curl -sSL {{ git_platform.url }}{{ git_platform.main_namespace }}my_programs/direnv_template/-/raw/master/setup.sh | bash -
+curl -sSL {{ git_platform.url }}{{ direnv_template.git_slug_with_namespace }}/-/raw/master/setup.sh | bash -
 ```
 
 This will create file `.envrc` and folder `.direnv`.
@@ -152,15 +151,15 @@ Once done, you can check following tutorials as starting point:
 
 !!! remark
     Last two tutorials are for the main repo hosting all of my project
-    documentations (i.e. [`{{ main_doc.repo_name }}`][main_docs_repo]). All of my
+    documentations (i.e. [`{{ site_base_url }}`][main_docs_repo]). All of my
     project use the same documentation and CI process. So do not forget to adapt
     the URL of the repo.
 
-[developers_guideline]: {{ main_doc.online_url }}dev_guides/contributing.html
+[developers_guideline]: {{ site_base_url }}dev_guides/contributing.html
 [add_direnv_module]: tutorials/add_direnv_module.md
-[update_documentation]: {{ main_doc.online_url }}dev_guides/tutorials/update_documentation.html
-[update_ci]: {{ main_doc.online_url}}dev_guides/tutorials/update_ci.html
-[main_docs_repo]: {{ git_platform.url }}{{ main_doc.repo_path_with_namespace }}
+[update_documentation]: {{ site_base_url }}dev_guides/tutorials/update_documentation.html
+[update_ci]: {{ site_base_url }}dev_guides/tutorials/update_ci.html
+[main_docs_repo]: {{ site_base_url }}
 
 <!-- URL used in mulitple section -->
 [direnv]: https://direnv.net

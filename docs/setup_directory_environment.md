@@ -9,7 +9,7 @@ can be done with the following command:
 
 ```bash
 # First download setup script in a temporary folder
-curl -sSL {{ git_platform.url }}{{ git_platform.main_namespace }}my_programs/direnv_template/-/raw/master/setup.sh \
+curl -sSL {{ git_platform.url }}{{ direnv_template.git_slug_with_namespace }}/-/raw/master/setup.sh \
   > /tmp/setup_direnv.sh
 # Then review this script with your favorite editor, `vim` here as example
 vim /tmp/setup_direnv.sh
@@ -33,7 +33,7 @@ chmod +x /tmp/setup_direnv.sh
 
 ```bash
 # You can setup directory environment in one command
-curl -sSL {{ git_platform.url }}{{ git_platform.main_namespace }}my_programs/direnv_template/-/raw/master/setup.sh | bash -
+curl -sSL {{ git_platform.url }}{{ direnv_template.git_slug_with_namespace }}/-/raw/master/setup.sh | bash -
 ```
 
 This will create a folder `.direnv` and the file `.envrc·` in the current
@@ -55,7 +55,7 @@ directory if they do not exists.
         script:
 
         ```bash
-        curl -sSL {{ git_platform.url }}{{ git_platform.main_namespace }}my_programs/direnv_template/-/raw/master/setup.sh | bash -s -- --ugrade
+        curl -sSL {{ git_platform.url }}{{ direnv_template.git_slug_with_namespace }}/-/raw/master/setup.sh | bash -s -- --ugrade
         ```
 
       - Assuming you already have configured your directory environment (see
@@ -422,7 +422,7 @@ Normally, you might see three types of error:
 
 [add_direnv_module]: tutorials/add_direnv_module.md
 [error_activation]: #error-during-activation
-[developers_guide]: {{ main_doc.online_url }}dev_guides/
+[developers_guide]: {{ site_base_url }}dev_guides/
 
 ## Upgrade
 
