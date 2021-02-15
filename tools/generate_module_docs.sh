@@ -16,6 +16,7 @@
 
 # Output folder
 DIRENV_MODULE_FOLDER="${DIRENV_ROOT}/modules"
+DIRENV_DEBUG_LEVEL="DEBUG"
 
 generate_doc()
 {
@@ -83,8 +84,9 @@ EOM
 
     if [[ -z "${line_from}" ]] || [[ -z "${line_to}" ]]
     then
-      direnv_log "ERROR" "Incomplete documentation for module ${module_name}"
+      direnv_log "ERROR" "Incomplete documentation for module **${module_name}**."
     else
+      direnv_log "INFO" "Generate documentation for module **${module_name}**."
       output_file="${DIRENV_ROOT}/docs/modules/${module_name}.md"
       doc_content="$(sed -n "${line_from},${line_to}"p "${i_node}")"
 
