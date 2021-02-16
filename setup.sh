@@ -186,7 +186,12 @@ ${e_normal}"
     # upgrade
     elif [[ "${UPGRADE}" == "true" ]]
     then
-      "${DIRENV_CLONE_ROOT}"/src/upgrade_direnv.sh || return 1
+      if [[ "${CLONE_METHOD}" == "ssh" ]]
+      then
+        "${DIRENV_CLONE_ROOT}"/src/upgrade_direnv.sh -s || return 1
+      else
+        "${DIRENV_CLONE_ROOT}"/src/upgrade_direnv.sh || return 1
+      fi
     fi
   }
 
