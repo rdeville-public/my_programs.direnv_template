@@ -1,5 +1,10 @@
 # Release notes
 
+## v1.1.5
+
+Fix upgrade_direnv.sh script to create dest directory first for new files.
+Update SHA1 of modified files.
+
 ## v1.1.4
 
 Fix bug in setup.sh and upgrade_direnv.sh scripts to avoid cloning twice the
