@@ -273,8 +273,8 @@ main()
     esac
   done
 
-  # Trying to clone `direnv_template` repo
-  if ! clone_direnv_repo
+  # Trying to clone `direnv_template` repo if not already cloned
+  if ! [[ -d ${DIRENV_CLONE_ROOT} ]] && ! clone_direnv_repo
   then
     echo -e "${e_warning}[WARNING] An error occurs when trying to get the last version of direnv_template."
     return 1

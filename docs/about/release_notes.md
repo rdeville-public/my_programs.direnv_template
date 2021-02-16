@@ -1,5 +1,11 @@
 # Release notes
 
+## v1.1.4
+
+Fix bug in setup.sh and upgrade_direnv.sh scripts to avoid cloning twice the
+repo when upgrading using setup.sh script.
+Update SHA1 of modified files.
+
 ## v1.1.3
 
 Fix bug in setup.sh with upgrading not working due to typo.
