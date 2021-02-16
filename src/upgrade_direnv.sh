@@ -158,6 +158,7 @@ upgrade_file()
   if ! [[ -f "${file_to}" ]]
   then
     direnv_log "INFO" "Installing new file ${i_node}."
+    mkdir -p "$(dirname "${file_to}")"
     mv "${file_from}" "${file_to}"
   elif [[ "${file_from_sha1}" != "${file_to_sha1}" ]]
   then
