@@ -151,25 +151,27 @@ upgrade_file()
     file_to="${DIRENV_ROOT}/.direnv/${i_node}"
   fi
 
-  file_from_sha1=$(sha1sum "${file_from}" | cut -d " " -f 1 )
-  file_to_sha1=$(sha1sum "${file_to}" | cut -d " " -f 1 )
-  file_bak="${DIRENV_OLD}/${i_node}.${bak_date}"
-
   if ! [[ -f "${file_to}" ]]
   then
     direnv_log "INFO" "Installing new file ${i_node}."
     mkdir -p "$(dirname "${file_to}")"
     mv "${file_from}" "${file_to}"
-  elif [[ "${file_from_sha1}" != "${file_to_sha1}" ]]
-  then
-    direnv_log "INFO" "New version of ${i_node}"
-    direnv_log "INFO" "Old version will be put in .direnv/old/${i_node}.${bak_date}"
-    if ! [[ -d "$(dirname "${file_bak}")" ]]
+  else
+    file_from_sha1=$(sha1sum "${file_from}" | cut -d " " -f 1 )
+    file_to_sha1=$(sha1sum "${file_to}" | cut -d " " -f 1 )
+    file_bak="${DIRENV_OLD}/${i_node}.${bak_date}"
+
+    if [[ "${file_from_sha1}" != "${file_to_sha1}" ]]
     then
-      mkdir -p "$(dirname "${file_bak}")"
+      direnv_log "INFO" "New version of ${i_node}"
+      direnv_log "INFO" "Old version will be put in .direnv/old/${i_node}.${bak_date}"
+      if ! [[ -d "$(dirname "${file_bak}")" ]]
+      then
+        mkdir -p "$(dirname "${file_bak}")"
+      fi
+      mv "${file_to}" "${file_bak}"
+      mv "${file_from}" "${file_to}"
     fi
-    mv "${file_to}" "${file_bak}"
-    mv "${file_from}" "${file_to}"
   fi
 }
 

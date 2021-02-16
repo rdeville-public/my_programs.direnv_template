@@ -14,11 +14,11 @@
 #
 #   <center>
 #
-#   | Name                                | Description                                                                                                                      |
-#   | :-------------                      | :----------------------------------------------------                                                                            |
-#   | `session_name`                      | Name of the tmux session                                                                                                         |
+#   | Name                                | Description                                                                                                                                 |
+#   | :-------------                      | :----------------------------------------------------                                                                                       |
+#   | `session_name`                      | Name of the tmux session                                                                                                                    |
 #   | `tmuxinator_on_project_start`       | (OPTIONAL) Runs on project start, always                                                                                                    |
-#   | `tmuxinator_on_project_first_start` | Run on project start, the first time                                                                                             |
+#   | `tmuxinator_on_project_first_start` | Run on project start, the first time                                                                                                        |
 #   | `tmuxinator_on_project_restart`     | (OPTIONAL) Run on project start, after the first time                                                                                       |
 #   | `tmuxinator_on_project_exit`        | (OPTIONAL) Run on project exit ( detaching from tmux session )                                                                              |
 #   | `tmuxinator_on_project_stop`        | (OPTIONAL) Run on project stop                                                                                                              |
@@ -204,7 +204,7 @@ _tmux_management_generate_tmuxinator_config()
 name: ${tmux_session}
 
 # Path of the project
-root: ./
+# root: ./
 
 # Project hooks
 # -----------------------------------------------------------------------------
@@ -386,23 +386,38 @@ _tmux_management_generate_tmuxinator_multiline_keys()
   local tmuxinator_templates_folder
   local content
 
-  if [[ -n "${tmux_management[${array_key}]}" ]] \
-    || [[ -n "${tmux_management[tmuxinator_templates]}" ]]
+  if [[ -n "${tmux_management[${array_key}]}" ]]
   then
     if [[ -n "${ZSH_VERSION}" ]]
     then
       IFS="${DIRENV_INI_SEP}" read -r -A tmuxinator_on_project_key_array \
         <<< "${tmux_management[${array_key}]}"
-      IFS="${DIRENV_INI_SEP}" read -r -A tmuxinator_templates_array \
-        <<< "${tmux_management[tmuxinator_templates]}"
     else
       IFS="${DIRENV_INI_SEP}" read -r -a tmuxinator_on_project_key_array \
         <<< "${tmux_management[${array_key}]}"
+    fi
+    if [[ ${#tmuxinator_on_project_key_array[@]} -gt 1 ]]
+    then
+      for i_cmd in "${tmuxinator_on_project_key_array[@]}"
+      do
+        content+="  ${i_cmd}\n"
+      done
+    else
+      content="${key}: ${tmuxinator_on_project_key_array[*]}"
+    fi
+  fi
+
+  if [[ -n "${tmux_management[tmuxinator_templates]}" ]]
+  then
+    if [[ -n "${ZSH_VERSION}" ]]
+    then
+      IFS="${DIRENV_INI_SEP}" read -r -A tmuxinator_templates_array \
+        <<< "${tmux_management[tmuxinator_templates]}"
+    else
       IFS="${DIRENV_INI_SEP}" read -r -a tmuxinator_templates_array \
         <<< "${tmux_management[tmuxinator_templates]}"
     fi
-    if [[ ${#tmuxinator_on_project_key_array[@]} -gt 1 ]] \
-      || [[ ${#tmuxinator_templates_array[@]} -gt 0 ]]
+    if [[ ${#tmuxinator_templates_array[@]} -gt 0 ]]
     then
       for i_template in "${tmuxinator_templates_array[@]}"
       do
@@ -417,23 +432,16 @@ _tmux_management_generate_tmuxinator_multiline_keys()
           content+="$(cat "${tmuxinator_templates_file}")"
         fi
       done
-      for i_cmd in "${tmuxinator_on_project_key_array[@]}"
-      do
-        content+="  ${i_cmd}\n"
-      done
-      if [[ -z "${content}" ]]
-      then
-        content="# ${key}: command"
-      else
-        content="${key}: >-\n${content}"
-      fi
-    else
-      content="${key}: ${tmuxinator_on_project_key_array[*]}"
     fi
-    echo -e "${content}"
-  else
-    echo "# ${key}: command"
   fi
+
+  if [[ -z "${content}" ]]
+  then
+    content="# ${key}: command"
+  else
+    content="${key}: >-\n${content}"
+  fi
+  echo -e "${content}"
 
   if [[ "${error}" == "true" ]]
   then
@@ -496,8 +504,6 @@ _tmux_management_generate_tmuxinator()
       ) || return 1
     _tmux_management_generate_tmuxinator_config
   fi
-
-
 }
 
 tmux_management()
@@ -531,7 +537,7 @@ tmux_management()
   tmux_session=${tmux_session//\./_}
 
   if command -v tmuxinator &> /dev/null \
-     && [[ -n "${tmux_management[tmuxinator_templates]}" ]]
+     && grep -q -e "^tmuxinator_.*=" ${DIRENV_ROOT}/.envrc.ini
   then
     _tmux_management_generate_tmuxinator || return 1
     tmuxinator start
@@ -542,8 +548,7 @@ tmux_management()
       tmux new-session -d -s "${tmux_session}"
     fi
     # Check if inside a tmux session
-    if [[ -n "${TMUX}" ]] \
-       && ! [[ "$(tmux display-message -p '#S')" != "${tmux_session}" ]]
+    if [[ -n "${TMUX}" ]]
     then
       tmux switch-client -t "${tmux_session}"
     else
