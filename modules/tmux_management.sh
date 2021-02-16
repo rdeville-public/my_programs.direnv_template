@@ -14,11 +14,11 @@
 #
 #   <center>
 #
-#   | Name                                | Description                                                                                                                      |
-#   | :-------------                      | :----------------------------------------------------                                                                            |
-#   | `session_name`                      | Name of the tmux session                                                                                                         |
+#   | Name                                | Description                                                                                                                                 |
+#   | :-------------                      | :----------------------------------------------------                                                                                       |
+#   | `session_name`                      | Name of the tmux session                                                                                                                    |
 #   | `tmuxinator_on_project_start`       | (OPTIONAL) Runs on project start, always                                                                                                    |
-#   | `tmuxinator_on_project_first_start` | Run on project start, the first time                                                                                             |
+#   | `tmuxinator_on_project_first_start` | Run on project start, the first time                                                                                                        |
 #   | `tmuxinator_on_project_restart`     | (OPTIONAL) Run on project start, after the first time                                                                                       |
 #   | `tmuxinator_on_project_exit`        | (OPTIONAL) Run on project exit ( detaching from tmux session )                                                                              |
 #   | `tmuxinator_on_project_stop`        | (OPTIONAL) Run on project stop                                                                                                              |
@@ -496,8 +496,6 @@ _tmux_management_generate_tmuxinator()
       ) || return 1
     _tmux_management_generate_tmuxinator_config
   fi
-
-
 }
 
 tmux_management()
@@ -531,7 +529,7 @@ tmux_management()
   tmux_session=${tmux_session//\./_}
 
   if command -v tmuxinator &> /dev/null \
-     && [[ -n "${tmux_management[tmuxinator_templates]}" ]]
+     && grep -q -e "^tmuxinator_.*=" ${DIRENV_ROOT}/.envrc.ini
   then
     _tmux_management_generate_tmuxinator || return 1
     tmuxinator start
@@ -542,8 +540,7 @@ tmux_management()
       tmux new-session -d -s "${tmux_session}"
     fi
     # Check if inside a tmux session
-    if [[ -n "${TMUX}" ]] \
-       && ! [[ "$(tmux display-message -p '#S')" != "${tmux_session}" ]]
+    if [[ -n "${TMUX}" ]]
     then
       tmux switch-client -t "${tmux_session}"
     else
