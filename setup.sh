@@ -174,7 +174,7 @@ main()
 
     # If folder seems to already be set to use direnv but user did not specify
     # to upgrade
-    if [[ "$UPGRADE" == "false" ]]
+    if [[ "${UPGRADE}" == "false" ]]
     then
       echo -e "${e_warning}\
 [WARNING] This folder seems to already be set to use direnv.
@@ -184,7 +184,7 @@ ${e_normal}"
       return 1
     # If folder seems to already be set to use direnv and user not specify to
     # upgrade
-    elif [[ "$UPGRADE" == "true" ]]
+    elif [[ "${UPGRADE}" == "true" ]]
     then
       "${DIRENV_CLONE_ROOT}"/src/upgrade_direnv.sh || return 1
     fi
@@ -304,7 +304,7 @@ ${e_normal}"
         CLONE_METHOD="ssh"
         ;;
       --upgrade|-u)
-        UPGRADE="crue"
+        UPGRADE="true"
     esac
   done
 

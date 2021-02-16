@@ -155,7 +155,11 @@ upgrade_file()
   file_to_sha1=$(sha1sum "${file_to}" | cut -d " " -f 1 )
   file_bak="${DIRENV_OLD}/${i_node}.${bak_date}"
 
-  if [[ "${file_from_sha1}" != "${file_to_sha1}" ]]
+  if ! [[ -f "${file_to}" ]]
+  then
+    direnv_log "INFO" "Installing new file ${i_node}."
+    mv "${file_from}" "${file_to}"
+  elif [[ "${file_from_sha1}" != "${file_to_sha1}" ]]
   then
     direnv_log "INFO" "New version of ${i_node}"
     direnv_log "INFO" "Old version will be put in .direnv/old/${i_node}.${bak_date}"

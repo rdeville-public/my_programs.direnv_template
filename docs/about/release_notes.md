@@ -1,5 +1,15 @@
 # Release notes
 
+## v1.1.3
+
+Fix bug in setup.sh with upgrading not working due to typo.
+Fix bug in upgrade_direnv.sh do not show error when moving files
+
+## v1.1.2
+
+Fix bug in setup.sh with upgrading not working due to not cloning git repo.
+Update SHA1 of modified files
+
 ## v1.1.1
 
 Fix shellcheck warnings
