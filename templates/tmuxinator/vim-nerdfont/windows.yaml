@@ -1,0 +1,5 @@
+  - 📝 :
+      layout: main-horizontal
+      panes:
+        - clear; vim
+        - clear
