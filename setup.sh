@@ -308,27 +308,27 @@ ${e_normal}"
     esac
   done
 
+  # Clone last version of direnv_template to .direnv/tmp folder
+  if ! clone_direnv_repo
+  then
+   echo -e "${e_warning}\
+[WARNING] An error occurs when trying to get the last version of direnv_template.\
+${e_normal}"
+    return 1
+  fi
+
+  # Source last version of direnv_template library scripts
+  for i_lib in "${DIRENV_CLONE_ROOT}"/lib/*.sh
+  do
+    # shellcheck source=./lib/direnv_log.sh
+    source "${i_lib}"
+  done
+
   if [[ -d "${DIRENV_ROOT}/.direnv" ]] || [[ -f "${DIRENV}/.envrc " ]]
   then
     # Check if user specify want to upgrade
     check_upgrade
   else
-    # Clone last version of direnv_template to .direnv/tmp folder
-    if ! clone_direnv_repo
-    then
-      echo -e "${e_warning}\
-[WARNING] An error occurs when trying to get the last version of direnv_template.\
-${e_normal}"
-      return 1
-    fi
-
-    # Source last version of direnv_template library scripts
-    for i_lib in "${DIRENV_CLONE_ROOT}"/lib/*.sh
-    do
-      # shellcheck source=./lib/direnv_log.sh
-      source "${i_lib}"
-    done
-
     # Install direnv_template
     setup_direnv "${TO_INSTALL[@]}"
   fi
